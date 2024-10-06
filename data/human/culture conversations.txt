@@ -926,8 +926,7 @@ mission "Syndicate Business 5.1 B 10m Expansion Crossroads Update"
 			has "Syndicate Business expansion 10m good"
 			has "Syndicate Business expansion 10m neutral"
 			has "Syndicate Business expansion 10m evil"
-	source
-		Crossroads
+	source "Crossroads"
 	on offer
 		conversation
 			`As you are walking around the low stone buildings of the spaceport, you remember that you invested in a refueling station expansion at Megaparsec's logistics hub on Crossroads.`
@@ -964,7 +963,7 @@ mission "Syndicate Business 5.1 B 10m Expansion Crossroads Update"
 				has "Syndicate Business expansion 10m evil"
 			# neutral 2
 			`	You decide to strike up a conversation, and after a brief exchange, the worker relaxes when you clarify that you're not from management. His face softens as he shares his story. He grew up poor in the Dirt Belt, and came to Crossroads hoping for something better.`
-			`	"I've been working hard, trying to give my kid a life I didn't have."
+			`	"I've been working hard, trying to give my kid a life I didn't have."`
 			`	He shrugs as he says "Sure, the hours are long and it's tough sometimes, but it beats what you hear about some Syndicate jobs--unsafe, grueling work. At least here, the work's steady and it puts food on the table. That's more than I ever had growing up in the Dirt Belt." He checks the time and stands, dusting off his uniform.`
 			`	"Thanks for the chat, but I've got a long night ahead. It's my kid's birthday, and I'm putting in extra hours so I can get them a cake. They're gonna love it."`
 			`	With a tired but determined smile, he heads back to work, leaving you with a glimpse of the reality behind the "conventional" station's daily grind.`
