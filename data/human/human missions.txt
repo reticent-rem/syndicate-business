@@ -7511,7 +7511,7 @@ mission "Adelita 5"
 
 
 
-mission "Syndicate Business 1"
+mission "Syndicate Business 1A"
 	name "Rescue kidnapped man in <waypoints>"
 	description "You have received a mysterious distress call from an alleged abductee in the <waypoints> system. Head there to see if you can find the signal's source."
 	minor
@@ -7523,7 +7523,6 @@ mission "Syndicate Business 1"
 		government "Syndicate"
 		attributes "core"
 	waypoint "Moktar"
-	destination "Sunracer"
 	on offer
 		conversation
 			`As you are walking through the spaceport, you are startled by a sudden loud beeping from a nearby computer terminal. The computer is unattended and the screen is blinking on and off.`
@@ -7573,6 +7572,19 @@ mission "Syndicate Business 1"
 		ship "Emergency Shuttle" "Escape Pod 001"
 		on kill
 			dialog "You watch as the Emergency Shuttle you're supposed to save explodes into a cloud of debris, all hope snuffed out in an instant."
+
+mission "Syndicate Business 1B"
+	assisting
+	name "Take Howard to <planet>"
+	description "Take a Megaparsec employee to <destination> after rescuing him from a soured investment opportunity."
+	destination "Sunracer"
+	source
+		government "Independent"
+		system "Moktar"
+	to offer
+		has "Syndicate Business 1A: active"
+	on offer
+		fail "Syndicate Business 1A"
 		conversation
 			`You board the Emergency Shuttle to see its desperate and nearly incoherent occupant: "Oh thank the stars, thank you! Captain, you've got to save me - please! I'm Howard. I promise you a reward if you can fix up this tin can so I can get to my office on <planet>! I'm with Megaparsec, I can make it worth your while!"`
 			choice
@@ -7580,6 +7592,24 @@ mission "Syndicate Business 1"
 					decline
 				`	"What's the deal with you and that pirate?"`
 			`	Howard takes a breath and seems to calm himself. "That pirate was a potential investor in the firm I work for. We had a disagreement over the terms and it obviously got quite out of hand. I'll need to find a new business partner now..." He trails off. Time to get back to <planet>.`
+	npc
+		government "Independent (Killable)"
+		personality heroic staying vindictive
+			confusion 20
+		system "Moktar"
+		ship "Vanguard" "Golden Jewel"
+		to spawn
+			not "syndicate business: golden jewel dead"
+		on kill
+			set "syndicate business: golden jewel dead"
+			dialog "The crew of the Golden Jewel are no more. You think you can make out the pirate captain drifting in space nearby."
+	npc accompany save
+		government "Independent"
+		personality quiet escort
+		system "Moktar"
+		ship "Emergency Shuttle" "Escape Pod 001"
+		on kill
+			dialog "You watch as the Emergency Shuttle you saved explodes into a cloud of debris, all hope snuffed out in an instant."
 	on complete
 		"reputation: Independent (Killable)" = 10
 		event "end of independent violence"
