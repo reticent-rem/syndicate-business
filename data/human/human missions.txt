@@ -8408,7 +8408,7 @@ mission "Syndicate Business 7"
 				`	"I'm out, we're through."`
 					decline
 			branch seendummy
-				has "Syndicate target practice [0]: offered" + "Syndicate target practice [1]: offered" + "Syndicate target practice [2]: offered" + "Syndicate target practice [3]" > 0
+				( "Syndicate target practice [0]: offered" + "Syndicate target practice [1]: offered" + "Syndicate target practice [2]: offered" + "Syndicate target practice [3]: offered" ) > 0
 			`	"That's the neat part, you don't have to. You'll be planting the evidence on an automated prototype vessel. The technology's under wraps, and still in the testing phases. Anyway, there's no one on the ship. And I want you to load it up with this file," he holds up a data disk. "It contains the real timing and defenses of the convoy that's coming through in a few days, as well as fake data indicating untold riches aboard to entice the pirates. I've also sprinkled in some digital signatures to suggest my rivals planted the info for the inevitable follow-up investigation."`
 				goto ending
 			label seendummy
