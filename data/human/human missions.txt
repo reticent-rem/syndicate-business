@@ -8254,6 +8254,215 @@ mission "Syndicate Business 5"
 
 event "syndicate business 10m investment done"
 
+mission "Syndicate Business 6"
+	name "Visit Howard on <planet>"
+	description "Howard wants to tell you about yet another investment opportunity."
+	minor
+	to offer
+		has "Syndicate Business 5: done"
+		has "Syndicate Business 5.1 A 10m Expansion Update: offered"
+		has "event: syndicate business 10m investment done"
+		random < 100
+		credits > 300000000
+	source
+		government "Syndicate"
+		attributes "core"
+		not planet "Sunracer"
+	destination "Sunracer"
+	on offer
+		conversation
+			branch deferred
+				has "Syndicate Business 6: deferred"
+			`After an uneventful walk through the spaceport, you return to the <ship> to see a message from Howard, the Megaparsec salesman who sold you two investments. The message says:`
+				goto message
+			label deferred
+			`	After an uneventful trip through the spaceport, you remember that you saved a message from Howard, the Megaparsec salesman who sold you two investments. The message says:`
+			label message
+			branch meanopening
+				"syndicate business: mean to Howard" > 0
+			`	"Dear <first>,`
+			`		"I trust that all is well with you. I am pleased to share that the investment opportunity I mentioned in my last message has now arrived. I truly value our partnership and the trust you've placed in me, and I'm confident this next venture will be a great fit for your ambitions.`
+			`	Please, meet me on Sunracer at your earliest convenience so we can review the details together. I look forward to catching up and discussing our next steps.`
+			`		Howard Vendeur`
+			`		Investor Relations Manager, Megaparsec Incorporated`
+				goto openingchoice
+			label meanopening
+			`	"Captain <last>,`
+			`		"I trust you've reviewed the interim Megaparsec report I last sent you. The investment opportunity I previously mentioned is now available. I expect you to meet me on Sunracer at your earliest convenience to finalize the details. I look forward to discussing next steps to close this deal promptly.`
+			`		Howard Vendeur`
+			`		Investor Relations Manager, Megaparsec Incorporated`
+			label openingchoice
+			choice
+				`	(Message him back that you're on the way.)`
+				`	(Save the message to look at later.)`
+					defer
+				`	(Ignore and delete the message.)`
+					decline
+			`	You immediately receive an automated response:`
+			`	"Dear Valued Contact,`
+			`	Thank you for reaching out. I am currently out of the office and will respond to your message as soon as possible.`
+			`	For urgent matters, please contact our support team."`
+			`		Howard Vendeur`
+			`		Investor Relations Manager, Megaparsec Incorporated`
+				accept 
+	on defer
+		set "Syndicate Business 6: deferred"
+	on accept
+		clear "Syndicate Business 6: deferred"
+	on complete
+		conversation
+			`Howard sends you a reminder of his address near the spaceport as you land your <model> on <planet> - curiously on the ninth floor of the Megaparsec corporate office, rather than the eighth floor you met him on last time. He must still be reserving conference rooms for these meetings.`
+
+
+
+mission "Syndicate Business 7"
+	name "Kicking a Hornet's Nest"
+	description "Howard needs you to destroy pirates in <waypoints> and meet up on <destination> by <date>."
+	priority
+	to offer
+		has "Syndicate Business 6: done"
+	source "Sunracer"
+	waypoint "Alcyone"
+	destination "Canyon"
+	deadline 7
+	on offer
+		conversation
+			`	After a short walk through the bustling spaceport, you reach Megaparsec's sky-scraping corporate office. The sleek and modern lobby evokes the fast, light ships they're known for, with polished surfaces, elegant furniture, and subtle lighting coming together seamlessly.`
+			`	The receptionist greets you with a nod and a warm smile, perhaps remembering you from your prior visits or merely being polite. The elevator ride up to the eighth floor is smooth, the soft hum of machinery fading away as you walk through the elevator doors. Howard's office is modern yet modest, featuring a central smart desk, a few sleek chairs, and floor to ceiling windows overlooking the busy shipyards. Howard himself is standing at one of the expansive windows, looking out at Megaparsec's shipyards below.`
+			branch meanhello
+				"syndicate business: mean to Howard" > 0
+			`	"Glad you could make it," he says, his voice cordial and confident. "This investment opportunity for you is ten times larger than our last deal - but first I need a small favor."`
+				goto restofhello
+			label meanhello
+			`	Howard's gaze doesn't shift from the glass as he says, "You're here. Good. This investment opportunity is ten times larger than the last one - but first I need a small favor."`
+			label restofhello
+			`	He turns to face you. "We're on the cusp of greatness."`
+			choice
+				`	"You didn't mention any favor in your message."`
+				`	"Am I going to have to jump through hoops for every investment you offer?"`
+				`	"The cusp of greatness?"`
+					goto great
+				`	"That's a bit dramatic with the window, no?"`
+					goto great
+			`	Howard raises an amused eyebrow and remarks, "Relax, it's nothing you can't handle. Just a minor detour on this road to greatness.`
+			label great
+			`	He turns back towards the window, "Greatness. My own corner office, a luxurious company ship, not to mention a sizable bonus. Director... All I need from you is to help nudge a small event in our favor."`
+			choice
+				`	"Okay."`
+					goto nextsteps
+				`	"What kind of nudge?"`
+					goto nextsteps
+				`	"The 'greatness' you're talking about is just another promotion?"`
+			`	Yet again he briefly turns from the window to face you.`
+			`	"Of course.`
+			label nextsteps
+			`	"Said nudge entails a certain degree of discretion and precision. You've demonstrated that during our Marauder acquisition, now we need it for an excision. I need you to plant some evidence onto a ship in <waypoints> to bait the pirates there into attacking our research convoy. Then regroup on <planet> before the convoy comes through next week to definitively shut down the Marauder project. After the anticipated response by the pirates, I'll need you to check out the wreckage to ensure there's no loose ends.`
+			`	Howard continues to watch the shipyards below for a long moment before turning from the window with a deliberate finality, and strides to his desk at the center of the room. Planting both hands firmly on the smooth surface, he meets your gaze with an unusual intensity and says, "I need you to kick a hornets nest and to make sure those hornets sting."`
+			choice
+				`	"Okay..."`
+					goto restofplan
+				`	"Stinging hornets and nest kicking. You got it."`
+					goto restofplan
+				`	"Last time I helped you start your Marauder project, now you want me to end it? What's going on, Howard?"`
+			branch meanplan
+				"syndicate business: mean to Howard" > 0
+			`	Howard exhales, shaking his head with a knowing smile. "Starting the Marauder project got me here, but keeping it alive? That won't help me get to the next level." Howard leans casually against the desk, his tone becoming more familiar but still businesslike. "The engineers are whispering that mass production doesn't look feasible. That's bad news for me if the higher-ups catch wind of it before we can control the narrative."`
+				goto restofplan
+			label meanplan
+			`	Howard exhales sharply as his eyes narrow in irritation. "Starting the Marauder project served its purpose, but now? It's a liability." At the last word, his gaze flicks over you, cold and quick. "Some engineers don't think that mass production of Marauder ships will be viable. That bodes poorly if the higher-ups catch wind of it before I can control the narrative."`
+			label restofplan
+			`	Howard's tone remains measured, but there's a calculated edge to it now. "So, we make sure the Marauder project dies for the right reasons before anyone starts asking the wrong questions. If, say, an unfortunate pirate attack conveniently wipes out key research and a few critical components, the whole project becomes unsalvageable. Lightspeed Logistics is responsible for security, not me, so if the whole thing goes up in flames, my reputation remains intact - just another casualty of circumstance."`
+			`	A smirk flickers across his face. "And while we're at it, perhaps some of the planted evidence suggests that one of my esteemed colleagues sabotaged the project to steal away my promotion. The bosses chew out my competitors, chasing shadows, and I get a new corner office." 
+			branch meancloser
+				"syndicate business: mean to Howard" > 0
+			`	He spreads his hands in a benevolent gesture. "It's the perfect exit strategy. No loose ends. And if there's anyone I trust to make this happen, it's you."`
+				goto restofcloser
+			label meancloser
+			`	He spreads his hands, as if the whole things is just another transaction. "It's a clean exit. No loose ends. All I need is for you yo make it happen."`
+			label restofcloser
+			choice
+				`	"Sounds good."`
+					goto askitself
+				`	"This all seems a bit more... cutthroat than before."`
+				`	This is too underhanded for me. I'm not working with you anymore.`
+					decline	
+			branch meancutthroat
+				"syndicate business: mean to Howard" > 0
+			`	Howard's eyes soften as he meets your gaze, a fond smile playing on his lips. "Cutthroat? How far we've come since you saved me from that pirate in Moktar. Every hard move has been a stepping stone as we climb to the peak of this ruthless world. And when I reach the top, I won't forget the loyalty that gets me there.`
+				goto goldenjewelaround
+			label meancutthroat
+			`	"Me? Cutthroat?" Howard maintains a hard gaze as he gives you an exaggerated wink, "Don't you forget it. I appreciate what you did on Moktar, but business is business. It's a ruthless world, and all we can do is climb to the top or be trampled beneath." Begrudgingly, he adds, "And I don't forget those who help me get there.`
+			label goldenjewelaround
+			branch piratearound
+				"syndicate business golden jewel dead"
+			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. I wonder if that ship's still flying out there...`
+				goto askitself
+			label piratearound
+			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. Almost a shame that the ship is no more...`
+			label askitself
+			`	"Anyway, back to the ask. Think you can plant evidence on a Quicksilver in <waypoints> and get to <planet> before <day>? Once you're on <planet>, I might need you to tie off any loose ends, but then right on through to that one hundred million credit investment. What do you say?"`
+			choice
+				`	"I'm in, lets do it."`
+					goto ending
+				`	"How can I possibly plant evidence on a crewed ship without anyone knowing?"`
+				`	"I'm out, we're through."`
+					decline
+			branch seendummy
+				has "Syndicate target practice [0]: offered" + "Syndicate target practice [1]: offered" + "Syndicate target practice [2]: offered" + "Syndicate target practice [3]" > 0
+			`	"That's the neat part, you don't have to. You'll be planting the evidence on an automated prototype vessel. The technology's under wraps, and still in the testing phases. Anyway, there's no one on the ship. And I want you to load it up with this file," he holds up a data disk. "It contains the real timing and defenses of the convoy that's coming through in a few days, as well as fake data indicating untold riches aboard to entice the pirates. I've also sprinkled in some digital signatures to suggest my rivals planted the info for the inevitable follow-up investigation."`
+				goto ending
+			label seendummy
+			`	"That's the neat part, you don't have to. You'll be planting the evidence on an automated prototype vessel. Funnily enough, records indicate that you've even been offered to test them before, so you know that technology is still very much in the testing phases. Anyway, there's no one on the ship. And I want you to load it up with this file," he holds up a data disk. "It contains the real timing and defenses of the convoy that's coming through in a few days, as well as fake data indicating untold riches aboard to entice the pirates. I've also sprinkled in some digital signatures to suggest my rivals planted the info for the inevitable follow-up investigation."`
+			label ending
+			`	He hands you a data disk containing the evidence. "I knew you'd make the right decision. Remember, we really want to kick the hornet's nest here. I've disabled the Quicksilver on <waypoints>, so you need to upload this evidence onto the ship, ensure its destruction, and get back to <planet> for any follow-ups. I'm also giving you a small explosive charge - just in case there's a loose end. See you in a week."`
+				accept
+	on enter "Moktar"
+		"reputation: Independent (Killable)" = -1000
+	npc
+		government "Independent (Killable)"
+		personality heroic staying vindictive
+			confusion 20
+		system "Moktar"
+		ship "Vanguard" "Golden Jewel"
+		to despawn
+			has "syndicate business golden jewel dead"
+		on encounter
+			conversation
+				`When you enter Moktar, your sensors detect a familiar pirate Vanguard. Your ship is immediately hailed, and the pirate opens communication.`
+				`	"If it isn't a pitiful, perplexing parasite, popping up to plague my peace once more!"`
+				choice
+					`	"We can't keep meeting like this."`
+					`	"Uhhh... who are you again?"`
+						goto whomst
+				`	"Our paths are as persistently painful as the pestilence - your persistent presence has provoked my peevishness!"`
+					goto power
+				label whomst
+				`	"I am the relentless, raging rapscallion who revels in ripping apart feeble, fumbling fiends!"`
+				label power
+				`	You can't help feeling a sense of deja vu as the Vanguard's engines roar to life and you see a half-baker's dozen fixed guns take aim at your ship, ready to strike.`
+		on kill
+			set "syndicate business golden jewel dead"
+			dialog "The crew of the Golden Jewel are no more. You think you can make out the pirate captain drifting in space nearby."
+	
+	npc board kill
+		government "Syndicate"
+		personality disables staying heroic target derelict
+			confusion 120
+		system "Alcyone"
+		ship "Quicksilver Test Dummy" "Syndicate Test Vessel"
+		on board
+			dialog ""
+	
+	npc
+		government "Syndicate"
+		personality disables heroic
+		system "Mirfak"
+		ship "Quicksilver" 4
+
+	on complete
+		"reputation: Independent (Killable)" = 0
+		event "syndicate business 100m investment done" 300
+
 mission "Timothy Radrickson 1: Stowaway"
 	invisible
 	landing
