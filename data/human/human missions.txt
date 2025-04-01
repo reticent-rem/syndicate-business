@@ -8304,7 +8304,7 @@ mission "Syndicate Business 6"
 			`	For urgent matters, please contact our support team."`
 			`		Howard Vendeur`
 			`		Investor Relations Manager, Megaparsec Incorporated`
-				accept 
+				accept
 	on defer
 		set "Syndicate Business 6: deferred"
 	on accept
@@ -8372,7 +8372,7 @@ mission "Syndicate Business 7"
 			`	Howard exhales sharply as his eyes narrow in irritation. "Starting the Marauder project served its purpose, but now? It's a liability." At the last word, his gaze flicks over you, cold and quick. "Some engineers don't think that mass production of Marauder ships will be viable. That bodes poorly if the higher-ups catch wind of it before I can control the narrative."`
 			label restofplan
 			`	Howard's tone remains measured, but there's a calculated edge to it now. "So, we make sure the Marauder project dies for the right reasons before anyone starts asking the wrong questions. If, say, an unfortunate pirate attack conveniently wipes out key research and a few critical components, the whole project becomes unsalvageable. Lightspeed Logistics is responsible for security, not me, so if the whole thing goes up in flames, my reputation remains intact - just another casualty of circumstance."`
-			`	A smirk flickers across his face. "And while we're at it, perhaps some of the planted evidence suggests that one of my esteemed colleagues sabotaged the project to steal away my promotion. The bosses chew out my competitors, chasing shadows, and I get a new corner office." 
+			`	A smirk flickers across his face. "And while we're at it, perhaps some of the planted evidence suggests that one of my esteemed colleagues sabotaged the project to steal away my promotion. The bosses chew out my competitors, chasing shadows, and I get a new corner office."`
 			branch meancloser
 				"syndicate business: mean to Howard" > 0
 			`	He spreads his hands in a benevolent gesture. "It's the perfect exit strategy. No loose ends. And if there's anyone I trust to make this happen, it's you."`
@@ -8385,7 +8385,7 @@ mission "Syndicate Business 7"
 					goto askitself
 				`	"This all seems a bit more... cutthroat than before."`
 				`	This is too underhanded for me. I'm not working with you anymore.`
-					decline	
+					decline
 			branch meancutthroat
 				"syndicate business: mean to Howard" > 0
 			`	Howard's eyes soften as he meets your gaze, a fond smile playing on his lips. "Cutthroat? How far we've come since you saved me from that pirate in Moktar. Every hard move has been a stepping stone as we climb to the peak of this ruthless world. And when I reach the top, I won't forget the loyalty that gets me there.`
