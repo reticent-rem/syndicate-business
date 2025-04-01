@@ -8317,7 +8317,7 @@ mission "Syndicate Business 6"
 
 mission "Syndicate Business 7"
 	name "Kicking a Hornet's Nest"
-	description "Howard needs you to destroy pirates in <waypoints> and meet up on <destination> by <date>."
+	description "Howard needs you to upload 'evidence' to an automated Quicksilver in <waypoints>, then meet up on <destination> by <date>."
 	priority
 	to offer
 		has "Syndicate Business 6: done"
@@ -8462,6 +8462,8 @@ mission "Syndicate Business 7"
 	on complete
 		"reputation: Independent (Killable)" = 0
 		event "syndicate business 100m investment done" 300
+
+event "syndicate business 100m investment done"
 
 mission "Timothy Radrickson 1: Stowaway"
 	invisible
