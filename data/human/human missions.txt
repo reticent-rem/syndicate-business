@@ -8512,7 +8512,7 @@ mission "Syndicate Business 8"
 	destination "Hephaestus"
 	on offer
 		conversation
-			`You step out on the stone field surronding Canyon's spaceport and quickly locate Howard's Shuttle in an open patch with a wide berth. Climbing aboard, you find Howard waiting with a measured nod.`
+			`You step out on the stone field surrounding Canyon's spaceport and quickly locate Howard's Shuttle in an open patch with a wide berth. Climbing aboard, you find Howard waiting with a measured nod.`
 			branch meancanyonopening
 				"syndicate business: mean to Howard" > 0
 			`	"Again, outstanding work, <first>", he says with a satisfied tone.`
@@ -8520,7 +8520,7 @@ mission "Syndicate Business 8"
 			label meancanyonopening
 			`	"Job's done," he states flatly.`
 			label restofcanyonopening
-  			`	"The pirates hit the convoy exactly as planned - the Marauder Project's vital components are all lost, with no loose ends left behind. They'll have no choice but to axe the project, and word is already circulating that my rivals are suspected before the wreckage has even been cleared."`
+			`	"The pirates hit the convoy exactly as planned - the Marauder Project's vital components are all lost, with no loose ends left behind. They'll have no choice but to axe the project, and word is already circulating that my rivals are suspected before the wreckage has even been cleared.`
 			`	"One last step for that promotion - I need you to escort me to Hephaestus so I can secure a few formal promotion recommendations from Syndicate execs, then we finalize that investment. Ready to go?"`
 			choice
 				`	"Ready as ever."`
@@ -8565,7 +8565,7 @@ mission "Syndicate Business 8"
 	on complete
 		conversation
 			`Your ship arrives amidst the sprawling metropolis of the Syndicate. You lose sight of Howard's Shuttle as you land your <model>, but nevertheless get a parting message from him:`
-			`	"Captain <last>, I'll be in touch in a few days for the investment once some schmoozing has secured my promotion. Stay sharp.
+			`	"Captain <last>, I'll be in touch in a few days for the investment once some schmoozing has secured my promotion. Stay sharp.`
 			`		Howard Vendeur`
 			`		Investor Relations Manager, Megaparsec Incorporated`
 			action
@@ -8650,7 +8650,7 @@ mission "Syndicate Business 10"
 				`	"It's alright, I suppose. Gets the job done."`
 				`	"This ship is a stunner - it really shines above the rest."`
 					goto verynice
-				`	"Just another pathetic piece of scrap."`				
+				`	"Just another pathetic piece of scrap."`
 					goto verynotnice
 			`	Howard nods, a slight edge of disappoint in his voice. "Fine, let's move on."`
 				goto restofhello
@@ -8658,7 +8658,7 @@ mission "Syndicate Business 10"
 			`	Howard's grin widens, his tone warm. "Glad you see it that way. I knew it'd catch your eye. Now, no time to waste."`
 			action
 				"syndicate business: mean to Howard" --
-			`` #action doesn't behave with goto's 
+			`` #action doesn't behave with goto's
 				goto restofhello
 			label verynotnice
 			`	Howard's face darkens, hurt barely concealed as he snaps, "I thought you'd have better taste. But we have work to do."`
