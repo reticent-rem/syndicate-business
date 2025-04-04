@@ -8328,7 +8328,7 @@ mission "Syndicate Business 7"
 	on offer
 		conversation
 			`After a short walk through the bustling spaceport, you reach Megaparsec's sky-scraping corporate office. The sleek and modern lobby evokes the fast, light ships they're known for, with polished surfaces, elegant furniture, and subtle lighting coming together seamlessly.`
-			`	The receptionist greets you with a nod and a warm smile, perhaps remembering you from your prior visits or merely being polite. The elevator ride up to the ninth floor is smooth, the soft hum of machinery fading away as you walk through the elevator doors. Howard's office is modern yet modest, featuring a central smart desk, a few sleek chairs, and floor to ceiling windows overlooking the busy shipyards. Howard himself is standing at one of the expansive windows, looking out at Megaparsec's shipyards below.`
+			`	The receptionist greets you with a nod and a warm smile, perhaps remembering you from your prior visits or merely being polite. The elevator ride up to the ninth floor is smooth, the soft hum of machinery fading away as you walk through the elevator doors. Howard's office is modern yet modest, featuring a central smart desk, a few sleek chairs, and large windows overlooking the busy shipyards. Howard himself is standing at one of the expansive windows, looking out at Megaparsec's shipyards below.`
 			branch meanhello
 				"syndicate business: mean to Howard" > 0
 			`	"Glad you could make it," he says, his voice cordial and confident. "This investment opportunity for you is ten times larger than our last deal - but first I need a small favor."`
@@ -8552,12 +8552,12 @@ mission "Syndicate Business 8"
 		on kill
 			dialog "You watch as Howard's Shuttle explodes into a cloud of debris along with any hope of his promotion."
 	npc
-		government "Pirate"
+		government "Bounty Hunter"
 		personality harvests nemesis plunders staying
 		system destination
 		ship "Quicksilver" "Severance Package"
 	npc
-		government "Pirate"
+		government "Bounty Hunter"
 		personality harvests nemesis plunders
 		system destination
 		ship "Quicksilver" "Hostile Takeover"
@@ -8621,6 +8621,7 @@ mission "Syndicate Business 9"
 				accept
 
 	on complete
+		clear "event: syndicate business Howard schmoozing"
 		conversation
 			`Like clockwork, you get a message from Howard as <ship> lands on <destination>:`
 			branch meanpromo
@@ -8655,10 +8656,9 @@ mission "Syndicate Business 10"
 			`	Howard nods, a slight edge of disappoint in his voice. "Fine, let's move on."`
 				goto restofhello
 			label verynice
-			`	Howard's grin widens, his tone warm. "Glad you see it that way. I knew it'd catch your eye. Now, no time to waste."`
 			action
 				"syndicate business: mean to Howard" --
-			`` #action doesn't behave with goto's
+			`	Howard's grin widens, his tone warm. "Glad you see it that way. I knew it'd catch your eye. Now, no time to waste."`
 				goto restofhello
 			label verynotnice
 			`	Howard's face darkens, hurt barely concealed as he snaps, "I thought you'd have better taste. But we have work to do."`
@@ -8675,18 +8675,48 @@ mission "Syndicate Business 10"
 		on kill
 			dialog "You watch as Howard's Bounder explodes into a cloud of debris along with any hope of that investment opportunity."
 	npc
-		government "Pirate"
+		government "Bounty Hunter"
 		personality harvests nemesis plunders staying
 		system destination
 		ship "Quicksilver" "Enforced Compliance"
 	npc
-		government "Pirate"
+		government "Bounty Hunter"
 		personality harvests nemesis plunders
 		system destination
 		ship "Quicksilver" "The Noncompete"
 	on complete
 		conversation
-			`You land on Sunracer...`
+			`As you land on Sunracer, Howard's Bounder touches down out of view. His office is still at Megaparsec's main office, but now on the 42nd floor rather than the eighth or ninth floor.`
+			`	You make your way through Sunracer's familiar terminals to the towering Megaparsec corporate office. Inside, the lobby exudes a refined elegance, polished surfaces accent by subtle, ambient lighting and a quiet hum of high-end technology. You are waved in by the receptionist and step into the elevator, and it takes noticeable longer than your previous rides - a deliberate and steady ascent.`
+			`	The elevator doors finally part to reveal the 42nd floor, a realm of refined elegance. Howard's corner office is a far cry from his modest reservable offices he had before. A custom-build smart desk commands the center, flanked by designer seating and accented by carefully curated art that whispers of ambition. Expansive windows frame a dynamic vista of the shipyards below - a living testament to the relentless innovation of Megaparsec. Standing at the window with quiet authority, Howard meets your gaze, a man unmistakably on his own deliberate ascent through the ranks of Megaparsec.`
+			`	He nods in acknowledgment as you step forward, the promise of new ventures electrifying the air.`
+			choice
+				`	"Howard."`
+				`	"Howard! This new office - magnificent. The view, the art, the power. Quite the upgrade. Well done."`
+					goto complimentary
+				`	"Still dramatic with the window I see, like some tragic corporate philosopher."`
+					goto rude
+			`	"<first>. Quite the ride up, wasn't it? Deliberate. Measured. An inevitable accession.`
+				goto restofhello
+			label complimentary
+			action
+				"syndicate business: mean to Howard" --
+			`	Howard looks visibly pleased. "Ah, you have an eye for refinement."`
+				goto restofhello
+			label rude
+			action
+				"syndicate business: mean to Howard" ++
+			`	Howard's expression momentarily tightens, before putting on a practiced smile. "Ah, your charm remains... distinct. I find a view helps with perspective."`
+				goto restofhello
+			label restofhello
+			`	Howard walks from the window towards the room's premier art piece, a canvas covered in bold, sweeping strokes of silver and blue. Howard gazes at the lines, "They evoke a rush of light and momentum, symbolizing Megaparsec's drive ever upwards towards uncharted horizons."`
+			"But we aren't here for an art tour. We're here to discuss your chance to invest in Megaparsec's new Crucible Facility."`
+			choice
+				`	"Crucible?"`
+				`	"Of course."`
+					goto skipcrucible
+			`	"'Crossroads Rugged Undertaking, Critically Innovative Benchmarking & Launch Evaluation' facility. C.R.U.C.I.B.L.E.`
+			label skipcrucible
 
 mission "Timothy Radrickson 1: Stowaway"
 	invisible
