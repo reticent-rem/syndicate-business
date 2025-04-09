@@ -1,6 +1,6 @@
 mission "Pirate Forged License"
 	priority
-	repeatable
+	repeat
 	stealth
 	illegal 5000 "Criminal Scum, I've scanned you!"
 	cargo "forged license transponder" 1
