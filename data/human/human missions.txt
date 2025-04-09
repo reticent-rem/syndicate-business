@@ -8685,6 +8685,7 @@ mission "Syndicate Business 10"
 		system destination
 		ship "Quicksilver" "The Noncompete"
 	on complete
+		event "syndicate business 100m investment done" 730
 		conversation
 			`As you land on Sunracer, Howard's Bounder touches down out of view. His office is still at Megaparsec's main office, but now on the 42nd floor rather than the eighth or ninth floor.`
 			`	You make your way through Sunracer's familiar terminals to the towering Megaparsec corporate office. Inside, the lobby exudes a refined elegance, polished surfaces accent by subtle, ambient lighting and a quiet hum of high-end technology. You are waved in by the receptionist and step into the elevator, and it takes noticeable longer than your previous rides - a deliberate and steady ascent.`
@@ -8710,13 +8711,173 @@ mission "Syndicate Business 10"
 				goto restofhello
 			label restofhello
 			`	Howard walks from the window towards the room's premier art piece, a canvas covered in bold, sweeping strokes of silver and blue. Howard gazes at the lines, "They evoke a rush of light and momentum, symbolizing Megaparsec's drive ever upwards towards uncharted horizons."`
-			"But we aren't here for an art tour. We're here to discuss your chance to invest in Megaparsec's new Crucible Facility."`
+			`	"But we aren't here for an art tour. We're here to discuss your chance to invest in Megaparsec's new CRUCIBLE Facility."`
 			choice
 				`	"Crucible?"`
 				`	"Of course."`
 					goto skipcrucible
-			`	"'Crossroads Rugged Undertaking, Critically Innovative Benchmarking & Launch Evaluation' facility. C.R.U.C.I.B.L.E.`
+			`	"'Crossroads Rugged Undertaking, Critically Innovative Benchmarking & Launch Evaluation' Facility. CRUCIBLE.`
 			label skipcrucible
+			`	"This isn't just another investment, it's a chance to push our high-performance vehicles to their absolute limits in one of the galaxy's harshest environments. Out on Crossroads, Mother Nature herself runs a full battery of tests: natural sandstorms, searing radiation, rugged terrain - conditions so extreme they would cost a fortune to simulate in a lab anywhere else.`
+			`	"By leveraging Crossroads' environment, our prototypes can be exposed to real-world, relentless conditions that will let us rapidly validate a design's durability and performance. It's the ultimate trial by radioactive fire - our very best vehicles battle-tested against nature's worst.`
+			`	"Now, your investment isn't just a stake in a facility. As is typical for these types of grand investments, a new business entity will be set up to construct and manage the property, while we sign an indefinite lease. That means you'll enjoy a steady income from those leasing fees regardless of the ups and downs of vehicle sales. You're not just fueling innovation, you'll be securing reliable returns while we revolutionize performance testing.`
+			branch goodsweetner
+				has "Syndicate Business expansion 10m good"
+			branch evilsweetner
+				has "Syndicate Business expansion 10m evil"
+			# neutral
+			`	"I know that you're a solid, by-the-book investor. This project plays to our strengths and ensures steady, proven returns through rigorous, real-world testing. No surprises.`
+				goto youin
+			label goodsweetner
+			`	"Given your last investment, I know that you care about things beyond profits. This is a chance to commit to eco-friendly innovation and safer work practices. Here, we can set new standards for performance and for doing good.`
+				goto youin
+			label evilsweetner
+			`	"Given your last foray into unregulated fuel sources, I know that you're looking for sky-high returns here. There's options here to cut through red tape and to make this facility a real profit multiplier.`
+			label youin
+			branch upcharge
+				"syndicate business: mean to Howard" > 0
+			`	"Now, the price for this investment is one hundred million credits for a robust 27,400 credit per day. And just like last time, no need to pull out your wallet - I can still pull a few strings with our friends at the bank and our Finance Division. For you, I've even talked them down to half interest. You'll just need to sign a few documents to get things moving."`
+			`	He slides a document over to you, with a sleek pen ready for your signature. "Just sign this first document for the loan and then we can talk through the rest of the documents before signing."`
+			choice
+				`	(Sign the loan.)`
+					goto nextynice
+				`	"I'm done with these deals, I'm leaving."`
+					decline
+			label upcharge
+			`	Howard's tone carries a hint of impatience. "Now, the price for this investment is one hundred and eleven million credits for a 27,400 credit per day return. I've arranged a loan for you at the bank and through our Finance Division, so you won't need to come up with the investment immediately. I've talked down the loan's interest to be half as high as your prior loan. Just sign these documents to formalize the arrangement."
+			`	He shoves a document over to you, with a flimsy pen ready for your signature. "Just sign this first document for the loan and then we can talk through the rest of the documents before signing."`
+			choice
+				`	(Sign the loan.)`
+					goto nextymean
+				`	"I'm done with these deals, I'm leaving."`
+					decline
+			label nextynice
+			action
+				debt 100000000
+					interest 0.04
+					term 7300
+			`	He takes the document from you and you see the loan terms on the screen behind him: 100M credits, 20 years, 15% rate.`
+				goto nexty
+			label nextymean
+			action
+				debt 111000000
+					interest 0.05
+					term 7300
+			`	He snatches the document from you with a wicked smile and you see the loan terms on the screen behind him: 111M credits, 20 years, 20% rate.`
+			label nexty
+			`	Howard leans back in his chair. "Well done. You're now a significant, valuable partner to  Megaparsec's business interests. We're considering a conventional launch of our testing facility on Crossroads - a balanced, by-the-book approach that promises steady, reliable returns."`
+			`	He eyes you carefully, gauging your reaction. "Of course, that's just one framework - there's always room to tweak the plan. What direction excites you more: unbridled profit, sticking with stability, or making a positive impact?`
+			branch goodcloser
+				has "Syndicate Business expansion 10m good"
+			branch evilcloser
+				has "Syndicate Business expansion 10m evil"
+			# neutral
+			`	After a moment, Howard adds, "Knowing you, I'd imagine we want to stick with stability, am I right?"`
+				goto closer
+			label goodcloser
+			`	After a moment, Howard adds, "Knowing you, I could voice over the plan that goes beyond profits towards more public good?"`
+				goto youin
+			label evilcloser
+			`	After a moment, Howard adds, "Knowing you, I could dive right into how we can cut red tape for that unbridled profit."`
+			label closer
+			`	Howard pauses, waiting on your reaction.`
+			choice
+				`	"The conventional plan sounds good to me."`
+					goto choseplana
+				`	"What would that unbridled profit entail?"`
+					goto planb
+				`	"Tell me about how this can make a positive impact?"`
+					goto planc
+			label plana
+			`	"The conventional facility delivers a solid, balanced approach. We use well-established testing protocols that meet regulatory standards while delivering steady, respectable returns. It's a safe, time-tested strategy that rewards disciplined execution without unnecessary risks, offering about 27,400 credits a day, or roughly 10% annually."`
+			choice
+				`	"Sounds like a good plan to me."`
+					goto choseplana
+				`	"What would it take to boost profits even more?"`
+					goto planb
+					to display
+						not "heardplanb"
+				`	"And if I have concerns about making a positive impact?"`
+					goto planc
+					to display
+						not "heardplanc"
+				`	"Could you remind me about the more profitable option?"`
+					goto planb
+					to display
+						has "heardplanb"
+				`	"Explain the 'genuine good' choice once more."`
+					goto planc
+					to display
+						has "heardplanc"
+			label planb
+			`	"There's a certain allure to uncompromising profit - a no-holds-barred, red-tape-free approach. We cut every corner on labor, safety, and the environment to unlock some explosive returns. It's the high-stakes, high-return option for those unafraid of a little controversy for rapid gains of 41,000 credits a day, or around 14% a year."`
+			`	"And as for any little controversies? Don't worry about it - they didn't matter last time, and the odds of another cropping up with this project are probably slim."`
+				to display
+					has "Syndicate Business expansion 10m evil"
+			action
+				set "heardplanb"
+			choice
+				`	"Bring on the profits, this uncompromising option is the one for me."`
+					goto choseplanb
+				`	"Tell me about the conventional facility again."`
+					goto plana
+				`	"And if I have concerns about the environmental or labor impact?"`
+					goto planc
+					to display
+						not "heardplanc"
+				`	"Explain the 'positive good' choice once more."`
+					goto planc
+					to display
+						has "heardplanc"
+			label planc
+			`	'You could opt for a more 'genuine good' with an eco-friendly, people-first facility. We invest in green technologies and world-class safety protocols, nurturing a work environment with better conditions and community integration - though of course at the cost of profit, returning 20,400 credits a day, or just around 7% a year."
+			action
+				set "heardplanc"
+			choice
+				`	"This people-first facility is the one for me."`
+					goto choseplanc
+				`	"Tell me about the conventional expansion again."`
+					goto plana
+				`	"What would it take to boost profits even more?"`
+					goto planb
+					to display
+						not "heardplanb"
+				`	"Could you remind me about the maximum profit option?"`
+					goto planb
+					to display
+						has "heardplanb"
+			label choseplana
+			action
+				"salary: Syndicate Business" += 27400
+				set "Syndicate Business expansion 100m neutral"
+				log "Was able to make another investment with Megaparsec, this time one hundred million credits, after planting evidence on a Syndicate ship for Howard. Out of three investment options, ended up choosing the conventional approach."
+			`	Howard nods appreciatively, his tone businesslike. "Congratulations - your choice reinforces Megaparsec's commitment to steady, risk‐mitigated growth. This approach will deliver reliable performance and  predictable returns, all while maintaining rigorous quality and safety standards. It's not always about flashy headlines; it's about long-term profitability with minimal surprises."`
+				goto ending
+			label choseplanb
+			action
+				"salary: Syndicate Business" += 41000
+				set "Syndicate Business expansion 100m evil"
+				log "Was able to make another investment with Megaparsec, this time one hundred million credits, after planting evidence on a Syndicate ship for Howard. Out of three investment options, ended up choosing the profitable approach."
+			`	"Howard leans forward with a calculated gleam in his eye. "Excellent choice - it's a high‐octane approach where we push every boundary to extract maximum profit. Think of the high returns, while Megaparsec gets rapid product cycles and a clear market edge. Minor bumps in the PR and labor front are just part of the cost of being a true trailblazer."`
+				goto ending
+			label choseplanc
+			action
+				"salary: Syndicate Business" += 20400
+				set "Syndicate Business expansion 100m good"
+				log "Was able to make another investment with Megaparsec, this time one hundred million credits, after planting evidence on a Syndicate ship for Howard. Out of three investment options, ended up choosing the positive impact approach."
+			`	Howard's expression softens as he speaks. "Well done - your choice speaks volumes about your vision, and shows a commitment to ethical standards, sustainability, and worker well-being. While the monetary returns are unquestionably the worst offered to you, the more intangible benefits of enhanced community goodwill, reduced environmental liabilities, and robust employee loyalty will help future-proof Megaparsec while also build lasting value."
+			label ending
+			`	"Great, now that we've locked in your investment, let's get the final the paperwork squared away." He slides a stack of documents across the desk. "These include the last of the remaining loan terms, the investment agreement for the testing facility, and the standard legal fine print. At this point, you know the drill - just a few signatures to seal the deal." He hands you a sleek pen, his gaze businesslike. "Once this is done, you'll be a stakeholder in one of Megaparsec's most innovative projects to redefine performance testing on Crossroads."`
+			choice
+				`	(Sign the paperwork.)`
+			`	With the last signature in place, Howard nods in approval. "Congratulations. You've made an excellent decision today. I'll certainly keep you in mind for future opportunities. You know me, 
+and I know who to call to invest when the next groundbreaking project comes around. He offers a firm handshake and a confident smile. "Until next time, we'll keep in touch."`
+			`	After that last goodbye, you leave Howard's office. The quiet within gives way to the steady hum of machinery as you walk through the elevator doors, beginning your long descent back to the ground - and to your next opportunity.`
+			action
+				clear "heardplanb"
+				clear "heardplanc"
+
+event "syndicate business 100m investment done"
 
 mission "Timothy Radrickson 1: Stowaway"
 	invisible
