@@ -10,8 +10,7 @@ mission "Pirate Forged License"
 		or
 			"event: pirate forged license timer"
 			"Pirate Forged License: offered" < 1
-	source
-		Greenrock
+	source Greenrock
 	on offer
 		conversation
 			`blah blah blah`
