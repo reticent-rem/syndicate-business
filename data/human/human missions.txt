@@ -8354,7 +8354,7 @@ mission "Syndicate Business 7"
 			`	Yet again he briefly turns from the window to face you.`
 			`	"Of course.`
 			label nextsteps
-			`	"Said nudge entails a certain degree of discretion and precision. You've demonstrated that during our Marauder acquisition, now we need it for an excision. I need you to plant some evidence onto a ship in <waypoints> to bait the pirates there into attacking our research convoy. Then, regroup on <planet> before the convoy comes through next week, and that should definitively shut down the Marauder project. After the anticipated response by the pirates, we confirm on <planet> that there's no loose ends.`
+			`	"Said nudge entails a certain degree of discretion and precision. You've demonstrated that during our Marauder acquisition, now we need it for an excision. I need you to plant some evidence onto a ship in <waypoints> to bait the pirates there into attacking a research convoy. Then, regroup on <planet> before the convoy comes through next week, and that should definitively shut down the Marauder project. After the anticipated response by the pirates, we confirm on <planet> that there's no loose ends.`
 			`	Howard continues to watch the shipyards below for a long moment before turning from the window with a deliberate finality, and strides to his desk at the center of the room. Planting both hands firmly on the smooth surface, he meets your gaze with an unusual intensity and says, "I need you to kick a hornets nest and to make sure those hornets sting."`
 			choice
 				`	"Stinging hornets and nest kicking. You got it."`
@@ -8373,7 +8373,7 @@ mission "Syndicate Business 7"
 			`	He spreads his hands in a benevolent gesture. "It's the perfect exit strategy. No loose ends. And if there's anyone I trust to make this happen, it's you."`
 				goto restofcloser
 			label meancloser
-			`	He spreads his hands, as if the whole things is just another transaction. "It's a clean exit. No loose ends. All I need is for you yo make it happen."`
+			`	He spreads his hands, as if the whole things is just another transaction. "It's a clean exit. No loose ends. All I need is for you to make it happen."`
 			label restofcloser
 			choice
 				`	"Sounds good."`
@@ -8393,7 +8393,7 @@ mission "Syndicate Business 7"
 			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. I wonder if that ship's still flying out there...`
 				goto askitself
 			label piratearound
-			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. Almost a shame that pirate captains isn't flying around anymore...`
+			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. Almost a shame that pirate captain isn't flying around anymore...`
 			label askitself
 			`	"Anyway, back to the ask. Think you can plant evidence on a Quicksilver in <waypoints>, then make sure it turns into wreckage, and get to <planet> before <day>? Once you're on <planet>, I might need you to tie off any loose ends, but then right on through to that one hundred million credit investment. What do you say?"`
 			choice
@@ -8594,7 +8594,7 @@ mission "Syndicate Business 9"
 		conversation
 			`After a few days, you get a triumphant message from Howard:`
 			`	<first> <last>,`
-			`	Promotion secured. Meet me here on <destination> to escort me back to Sunracer - I've got a new ship and office to show you. And of course plans to finalize our 100M credit investment.`
+			`	Promotion secured. Meet me here on <destination> to escort me back to Sunracer - I've got a new ship and office to show you. And of course plans to finalize our nine-figure credit investment.`
 			`		Howard Vendeur`
 			`		Director of Investor Relations & External Projects, Megaparsec Incorporated`
 			choice
@@ -8636,7 +8636,7 @@ mission "Syndicate Business 9"
 			`	"Welcome back. Meet me at the spaceport so we can get back to Sunracer. And take a moment to check out my new ship - I think you'll be impressed."`
 				goto restofhello
 			label meanpromo
-			`	"You're here. Meet me at the spaceport to escort me back to Sunracer. I have an impressive new ship - get here now."`
+			`	"I see you've arrived. Meet me at the spaceport to escort me back to Sunracer. I have an impressive new ship - get here as soon as possible."`
 			label restofhello
 			`		Howard Vendeur`
 			`		Director of Investor Relations & External Projects, Megaparsec Incorporated`
@@ -8864,7 +8864,7 @@ mission "Syndicate Business 10"
 				"salary: Syndicate Business" += 41000
 				set "Syndicate Business expansion 100m evil"
 				log "Was able to make another investment with Megaparsec, this time one hundred million credits, after planting evidence on a Syndicate ship for Howard. Out of three investment options, ended up choosing the profitable approach."
-			`	"Howard leans forward with a calculated gleam in his eye. "Excellent choice - it's a high-octane approach where we push every boundary to extract maximum profit. Think of the high returns, while Megaparsec gets rapid product cycles and a clear market edge. Minor bumps in the PR and labor front are just part of the cost of being a true trailblazer."`
+			`	"Howard leans forward with a calculated gleam in his eye. "Excellent choice - it's a high-octane approach where we push every boundary to extract maximum profit. Think of your high returns, while Megaparsec gets rapid product cycles and a clear market edge. Minor bumps in the PR and labor front are just part of the cost of being a true trailblazer."`
 				goto ending
 			label choseplanc
 			action
@@ -8876,7 +8876,7 @@ mission "Syndicate Business 10"
 			`	"Great, now that we've locked in your investment, let's get the remaining paperwork squared away." He slides a stack of documents across the desk. "These include the last of the remaining loan terms, the investment agreement for the testing facility, and the standard legal fine print. At this point, you know the drill - just a few signatures to seal the deal." He hands you a sleek pen, his gaze businesslike. "Once this is done, you'll be a stakeholder in one of Megaparsec's most innovative projects to redefine performance testing on Crossroads."`
 			choice
 				`	(Sign the paperwork.)`
-			`	With the last signature in place, Howard nods in approval. "Congratulations. You've made an excellent decision today. I'll certainly keep you in mind for future opportunities. You know me, and I know who to call to invest when the next groundbreaking project comes around." He offers a firm handshake and a confident smile. "Until next time, we'll keep in touch."`
+			`	With the last signature in place, Howard nods in approval. "Congratulations. You've made an excellent decision today. I'll certainly keep you in mind for future opportunities. You know me, and I know who to call to invest when the next groundbreaking project comes around." He offers a firm handshake and a confident smile. "Until next time. Keep in touch."`
 			`	After that last goodbye, you leave Howard's office. The quiet within gives way to the steady hum of machinery as you walk through the elevator doors, beginning your long descent back to the ground - and to your next opportunity.`
 			action
 				clear "heardplanb"
