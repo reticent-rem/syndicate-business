@@ -8395,7 +8395,7 @@ mission "Syndicate Business 7"
 			label piratearound
 			`	Wistfully, Howard adds, "Moktar. The Golden Jewel. Almost a shame that pirate captain isn't flying around anymore...`
 			label askitself
-			`	"Anyway, back to the ask. Think you can plant evidence on a Quicksilver in <waypoints>, then make sure it turns into wreckage, and get to <planet> before <day>? Once you're on <planet>, I might need you to tie off any loose ends, but then right on through to that one hundred million credit investment. What do you say?"`
+			`	"Anyway, back to the ask. Think you can plant evidence on a Quicksilver in <waypoints>, then make sure it turns into wreckage, and get to <planet> before <day>? Once you're on <planet>, I might need you to tie off any loose ends, but then right on through to that nine figure credit investment. What do you say?"`
 			choice
 				`	"I'm in, lets do it."`
 					goto ending
@@ -8419,7 +8419,7 @@ mission "Syndicate Business 7"
 				`	"Not interested. I'm done with these tasks."`
 					decline
 			label ending
-			`	He hands you a data disk containing the evidence. "I knew you'd make the right decision. Remember, we really want to kick the hornet's nest here. I've disabled the Quicksilver on <waypoints>, so it should be a cinch for you to upload this evidence onto the ship and ensure its destruction. Remember, first board, then blast. Meet me on <planet> after for any follow-ups. See you in a week."`
+			`	He hands you a data disk containing the evidence. "I knew you'd make the right decision. Remember, we really want to kick the hornet's nest here. I've disabled the Quicksilver on <waypoints>, so it should be a cinch for you to upload this evidence onto the ship and ensure its destruction. Remember, first board, then blast. Meet me on <planet> afterwards for any follow-ups. See you in a week."`
 				accept
 	on enter "Moktar"
 		"reputation: Independent (Killable)" = -1000
