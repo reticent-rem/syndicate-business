@@ -614,7 +614,7 @@ mission "Pirate Intro I: The Old Buccaneer" # get the map & cryptic words from B
 				`	(Leave on your ship without investigating.)`
 					decline
 			# Describes Billy Bones from the first page of Treasure Island
-			`	You pry open the cockpit's hatch and cough through growing smoke to find a heavy-set man slumped in the pilot's seat. His tanned skin is slick with sweat and blood, a tattered blue coat hangs off one shoulder, and a single pigtail spills over his collar. One ragged, scarred hand - nails black and broken - desperately clutches a weathered chest in his lap. The other rummages through his tattered coat, searching. A jagged cut mars his cheek, while shrapnel protrudes out of a gaping wound in his midsection.`	
+			`	You pry open the cockpit's hatch and cough through growing smoke to find a heavy-set man slumped in the pilot's seat. His tanned skin is slick with sweat and blood, a tattered blue coat hangs off one shoulder, and a single pigtail spills over his collar. One ragged, scarred hand - nails black and broken - desperately clutches a weathered chest in his lap. The other rummages through his tattered coat, searching. A jagged cut mars his cheek, while shrapnel protrudes out of a gaping wound in his midsection.`
 			`	He groans, "They're after the map... But I won't give up Flint's treasure so easy." A shaking hand emerges from his tattered coat grasping a small, brass key. "They'll have to pry it from my cold, dead hands."`
 			`	He blinks, focus sharpening as he finally sees you. His key opens the chest and the faint smell of tobacco and tar mix with the increasingly acrid smoke. "They're after this," he rasps, pulling a small pouch from the chest and shoves it into your hands. "The first key is at Hawkins Rest. Beware the Cyborg!" and he slumps back, shaking hands ceased. The cockpit shudders as the smoke suffocates, flames now licking the hull. With the given pouch in your hand, you escape just before the wreck erupts into a roaring inferno.`
 			`	Outside the wreck, you open the pouch to reveal a small, metallic sphere, textured with lines and symbols. You notice that the sphere has seven prominent keyholes, and a single protrusion - perhaps a data link. It is heavy in your hands. To accept the dying pirate's map is to accept the pirate's path. Or abandon the sphere forever.
@@ -630,7 +630,7 @@ mission "Pirate Intro I: The Old Buccaneer" # get the map & cryptic words from B
 # When the player enters the system, the map sphere reveals Hawkins Rest in a very showy way - showing the player where the hideaway is and, if Jack is there, reveals the existence of the map to Jack.
 # Jack says nothing but gets a glint in his eye, if he's there.
 
-mission "Pirate Intro II: The Sea Cook" #ask around for a lead, get told to do pirate jobs for credibility.  
+mission "Pirate Intro II: The Sea Cook" #ask around for a lead, get told to do pirate jobs for credibility.
 	name "Blah"
 	description "blah blah."
 	source
@@ -642,7 +642,7 @@ mission "Pirate Intro II: The Sea Cook" #ask around for a lead, get told to do p
 		# "pirate jobs" < 5
 		not "Pirate Intro II: The Sea Cook: declined"
 		not "Pirate Intro II: The Sea Cook: done"
-	repeatable
+	repeat
 	# todo, add substitutions so this conversation is more variable
 	on offer
 		conversation
@@ -725,8 +725,7 @@ mission "Pirate Intro III: My Shore Adventure" # Meet Jack Silver, unlock first 
 			`	"Beware, eh? You best be wearing whatever ya like!" He rolls back in a deep, baritone laugh. "And cyborgs? No better nor worse than any other you'll cross. As for legends... there's Hawkins, o'course, but nothin's left of the man, save the myth and Hawkins Rest."`
 				goto hawkins
 			label flint
-			# parrot line inspired by Treasure Island X: The Voyage, amuck phrase inspired-ish from XI
-What I Heard in the Apple-Barrel
+			# parrot line inspired by Treasure Island X: The Voyage, amuck phrase inspired-ish from XI What I Heard in the Apple-Barrel
 			# I believe Quarg lifespans are older than the parrot, but what does Jack care - he's a lying pirate
 			`	"Capt'n Flint, the Famed Free-" a loud squawk cuts him off, and he turns to face the bird perched on his shoulder. "Here's Capt'n Flint - I calls my parrot Capt'n Flint, after the Famed Freebooter. That bird's maybe two thousand years old, older still than any Quarg you'd come across. They say his namesake's ship was amuck with red blood and amassed with wealth beyond reckoning, christened at Hawkins Rest.`
 			label hawkins
@@ -745,7 +744,7 @@ What I Heard in the Apple-Barrel
 			`	Just after touchdown, Jack limps into the cockpit with the map-sphere in a scarred hand, the bird on his shoulder cooing softly. Jack tilts his head, and with a low voice says, "Tell me, Capt'n, d'you know what this is and who stands before ye now?"`
 			choice # probably branch for these
 				`	"I don't know how to unlock the map. And not much about you."`
-				`	"It's a map, and you're the crusty cook I picked up on Bounty."` 
+				`	"It's a map, and you're the crusty cook I picked up on Bounty."`
 				`	"I have a feeling you're about to tell me."`
 			`	Jack's laughter rumbles through the cockpit like thunder and he leans forward. "Aye," he rumbles, tracing a scarred finger along one of the sphere's grooved glyphs, "me true trade's richer than spice and stew. I know more o Flint than any fool alive - plunders, histories, secrets." He raises the sphere at the last word, which glitters in the light. "Don't take me word? Ask ol Capt'n Flint himself - squawks more o the truth better than any son of a rum puncheon." he juts a thumb to his shouldered parrot, which squawks once, tilting its head.`
 			`	Jack drops his voice to a consiratorial whisper. "Here's me offer, Capt'n: I'll tell ye the hidden histories and lost legends o old Flint here to help ye crack this orb wide, and lead ye to Flint's Treasure. In return, I humbly ask fer a share befittin a Quartermaster - every fourth bit o loot found. Ye can even keep the heavier hoard o any artifacts found, just a fourth o the credits'll do fer me."`
@@ -762,7 +761,7 @@ What I Heard in the Apple-Barrel
 				`	(Wait on the ship.)`
 				`	(Pursue Jack.)`
 					goto pursuit
-			`	You remain in the suddenly hushed cockpit as Jack disapeared with the map. Without it, there is no hope to uncover its secrets, let alone find whatever treasure it leads to. Minutes turn to hours that crawl by in silence.`
+			`	You remain in the suddenly hushed cockpit as Jack disappeared with the map. Without it, there is no hope to uncover its secrets, let alone find whatever treasure it leads to. Minutes turn to hours that crawl by in silence.`
 				goto hesback
 			label pursuit
 			`	You dart out of the <ship> to follow Jack's trail only to find no trace of the man. You push into the cramped corridors of Hawkins Rest and through what feels like countless doors, ducts, and turns beneath flickering lights, with no sign of Jack or the sphere. After fruitless hours of searching, you limp back to the ship weary and emptyhanded.`
@@ -774,19 +773,14 @@ What I Heard in the Apple-Barrel
 
 # Mission if player opts out of Jack, to reveal other starting hideaways after landing on Hawkins Rest
 
-"Pirate Intro IV: The Stockade" # repeatable mission to ask Jack about remaining regions (up to region heads what they want here: story seeds, common knowledge about the region, history, whatever) and general pirate info
+# "Pirate Intro IV: The Stockade" # A repeatable mission to ask Jack about the remaining regions that the player hasn't visited/unlocked hideaways for yet. Up to regional storyline creators what they want here: Jack can drop story seeds, common knowledge about the region, history, or whatever else. He also is available for more general pirate questions.
 
-"Pirate Intro V: My Sea Adventure" # Semi-repeatable (7 times, once for each region unlocked): After unlocking a region, 
-# 1) Jack will tell you a bit of lore about a region (again up to region heads if they want something here or I can make this more about how Flint visited said region) 
-# 2) And/or Jack will tell the player a progressing short history of the legendary pirate Flint
-# By the end, the player will have a short story outlining the legend of Flint in their logbook
+# "Pirate Intro V: My Sea Adventure" # Semi-repeatable (7 times, once for each region unlocked): After unlocking a region:
+# 1) Jack will tell you a bit of lore about a region (again up to regional storyline creators if they want something specific, or I can make this more about how Flint visited said region).
+# 2) Jack will tell the player a progressing short history of the legendary pirate Flint, that will have clues/answers to the final treasure's traps and puzzles (but is in no way required to complete them).
+# 3) By the end, the player will have a short story outlining the legend of Flint in their logbook.
 
-"Pirate Intro VI: Captain Silver" # After unlocking all regions and getting the last bit of story about Flint, the map is unlocked and the treasure's location revealed. Probably out of scope at least until the rest of this is settled.
-# More for the future, but this could be:
-# 1) Simple reveal of the treasure with a short mission describing the adventure/contents.
-# 2) Treasure Island route of larger journey to treasure itself, a betrayal by Jack, more extensive fight, maybe journey to track him down, etc (this would probably be more pirate campaign-y route)
-# 3) Dynamic-ish route:
-# 	A) Finding all the parts of the treasure map invisibly unhides the hideaway the treasure is on (but the region stories in Part V giving hints to the location)
-#	B) Getting to the hideaway's system, the unlocked treasure map reveals the hideaway
-# 	C) Hideaway the treasure is booby trapped/behind puzzles, (with hints to the answers hidden/revealed within the "short history of the legendary pirate Flint"
-# 
+
+# "Pirate Intro VI: Captain Silver" # After unlocking all regions and getting the last bit of story about Flint, the treasure map is finally unlocked, and the treasure's location revealed. Probably the last thing to work on after the rest of this is settled. Options of:
+# 1) Reveal of the treasure with a short mission describing the treasure's puzzle/trap/contents. Possible small dynamic betrayal by Jack depending on if you partnered with him or not (only impacts how much treasure you get, and his escape leaves open a plot thread for future stories/kickstarting a pirate campaign later).
+# 2) Treasure Island route of this being a larger journey to the treasure itself, a betrayal by Jack, more extensive fight, maybe journey to track him down, etc (this would probably be front-loading a more pirate campaign-y route).
