@@ -1640,43 +1640,47 @@ phrase "three card monte opening"
 		"the dealer looks up, grins, and offers a simple challenge: put up 1000 credits and pick the ace from the three cards to double your money"
 
 
-
 mission "Three Card Monte"
 	minor
 	repeat
 	# invisible
-	to offer # 0.4% on most planets so 173 spaceport visits for 50% of seeing at least once (or 575 spaceport visits for 90%), 1.4% on urban or touristy planets so 50 spaceport visits for 50%/164 visits for 90%, 2.4% on earth (tourism & urban) or pirate planets,
-and 3.4% on urban pirate planets (only Gagarin, Mordente-Bridi)
-		random < 100 # set to 20
-	#	random < 2 + 5 * "flagship planet attribute: tourism" + 5 * "flagship planet attribute: urban" + 10 * "flagship planet attribute: pirate" - "Three Card Monte: declined"
-	#	credits > 1000
+	to offer 
+		random < 100
+	#	random < 2 + 5 * "flagship planet attribute: tourism" + 5 * "flagship planet attribute: urban" + 10 * "flagship planet attribute: pirate" - "declined three card monte"
+		credits > 1000
 	source
 		government "Republic" "Free Worlds" "Syndicate" "Neutral" "Independent"
 		# not attributes "deep" "station"
 	on offer
 		conversation
 			`${three card monte opening}.`
+			action
+				"games played" = 0
 			label newgame
 			`	The dealer looks at you expectantly.`
 			choice
 				`	(Put down 1000 credits to play the game.)`
 					to display
 						credits > 1000
+					goto gamestart
 				`	(Skip the game.)`
-					decline
+			action
+				"declined three card monte" ++
+			`	You leave the gambling game for your ship.`
+				decline
+			label gamestart
 			action
 				"multiplication" = 1 + "roll: 2" 
 				"addition" = "roll: 3"
 				"card spot" = ( "multiplication" * 1 + "addition" ) % 3
 				"step" = 1
 				payment -1000
-				"games played" = 0
 			`	Intrigued, you play the game. "All you need to do is find the ace," the dealer holds the ace faceup towards you, then puts it down on the center of the table between two other facedown cards. Next, the dealer starts shuffling.`
 				goto begin
 			label nextdecision
-			`	testing, &[card spot]. &[multiplication] &[addition]`
+			# `	testing, &[card spot]. &[multiplication] &[addition]`
 			branch ending
-				"step" >= 2
+				"step" >= 2 + "games played" * 2
 			action
 				"step" ++
 				"multiplication" = 1 + "roll: 2" 
@@ -1707,7 +1711,7 @@ and 3.4% on urban pirate planets (only Gagarin, Mordente-Bridi)
 			`	The dealer swaps the left and right cards.`
 				goto nextdecision
 			label swap1 # no change
-			`	The dealer swaps the left card with itself, perhaps leaving the board untouched .`
+			`	The dealer swaps the left card with itself, perhaps leaving the board untouched.`
 				goto nextdecision
 			label swap2 # swap clockwise
 			`	The dealer swaps the whole set of cards to the right, with the rightmost card ending up on the left.`
@@ -1748,26 +1752,32 @@ and 3.4% on urban pirate planets (only Gagarin, Mordente-Bridi)
 			label trueending
 			branch correct
 				"card spot" == "guess"
-			`	And turns it over to reveal a decidedly non-ace card. You've lost 1000 credits this round.`
-			`	The dealer reveals that the left card was the ace. "Better luck next time."`
+			`	And flips your chosen, decidedly non-ace card. You've lost 1000 credits this round.`
+			`	He then moves his hand to reveal that the left card was the ace.`
 				to display
 					and
 						"card spot" == 0
-			`	The dealer reveals that the middle card was the ace. "Better luck next time."`
+			`	He then moves his hand to reveal that the middle card was the ace.`
 				to display
 					and
 						"card spot" == 1
-			`	The dealer reveals that the right card was the ace. "Better luck next time."`
+			`	He then moves his hand to reveal that the right card was the ace.`
 				to display
 					and
 						"card spot" == 2
+			`	"Better luck next time."`
 				goto again
 			label correct
 			`	And flips over an ace! The dealer seems bewildered, but begrudgedly hands over 2000 credits to double your money.`
 			action
 				payment 2000
 			label again
-			`	The dealer gives you a look. Fancy another game?`
+			branch cutoff
+				"games played" < 3
+			`	The dealer looks spooked by some unseen authorities and shoos you away, quickly packing up and disappearing into the spaceport.`
+				goto trueending
+			label cutoff
+			`	The dealer gives you a look. "Fancy another game?"`
 			action
 				"games played" ++
 			choice
@@ -1775,7 +1785,8 @@ and 3.4% on urban pirate planets (only Gagarin, Mordente-Bridi)
 					to display
 						and
 							credits > 1000
-							"games played" < 3
 					goto newgame
 				`	"Not today"`
-			`	You bid the table goodbye.`
+			label trueending
+			`	You leave the gambling game for your ship.`
+				decline
