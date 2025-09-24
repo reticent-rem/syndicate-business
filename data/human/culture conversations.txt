@@ -1651,7 +1651,7 @@ mission "Three Card Monte"
 	#	random < 2 + 5 * "flagship planet attribute: tourism" + 5 * "flagship planet attribute: urban" + 10 * "flagship planet attribute: pirate" - "Three Card Monte: declined"
 		credits > 1000
 	source
-		government "Republic" "Free Worlds" "Syndicate" "Neutral" "Independent"
+		government "Republic" "Free Worlds" "Syndicate" "Neutral" "Independent" "Pirate"
 		# not attributes "deep" "station"
 	on offer
 		conversation
@@ -1660,7 +1660,7 @@ mission "Three Card Monte"
 				to display
 					"reputation: Pirate" > 100
 			action
-				"games played" = 0
+				"monte: games played" = 0
 				"monte: not scam chance" = "reputation: Pirate" / 10 + 50
 				"monte: not scam chance" >?= 25 # 25% floor
 			label newgame
@@ -1672,10 +1672,10 @@ mission "Three Card Monte"
 				`	(Skip the game.)`
 					decline
 			action
-				"multiplication" = 1 + "roll: 2"
-				"addition" = "roll: 3"
-				"card spot" = ( "multiplication" * 1 + "addition" ) % 3
-				"step" = 1
+				"monte: multiplication" = 1 + "roll: 2"
+				"monte: addition" = "roll: 3"
+				"monte: card spot" = ( "monte: multiplication" * 1 + "monte: addition" ) % 3
+				"monte: step" = 1
 				clear "monte: scammed"
 				payment -1000
 			`	You put down a 1000 credit chip to play the game. "All you need to do is find the ace," the dealer holds the ace faceup towards you, then puts it down on the center of the table between two other facedown cards. Next, the dealer starts shuffling.`
@@ -1683,33 +1683,33 @@ mission "Three Card Monte"
 			label nextdecision
 			# `	testing, &[card spot]. &[multiplication] &[addition]`
 			branch ending
-				"step" >= 2 + "games played" * 2
+				"monte: step" >= 3 + "monte: games played" * 2
 			action
-				"step" ++
-				"multiplication" = 1 + "roll: 2"
-				"addition" = "roll: 3"
-				"card spot" = ( "multiplication" * "card spot" + "addition" ) % 3
+				"monte: step" ++
+				"monte: multiplication" = 1 + "roll: 2"
+				"monte: addition" = "roll: 3"
+				"monte: card spot" = ( "monte: multiplication" * "monte: card spot" + "monte: addition" ) % 3
 			label begin
 			branch swap1
 				and
-					"multiplication" == 1
-					"addition" == 0
+					"monte: multiplication" == 1
+					"monte: addition" == 0
 			branch swap2
 				and
-					"multiplication" == 1
-					"addition" == 1
+					"monte: multiplication" == 1
+					"monte: addition" == 1
 			branch swap3
 				and
-					"multiplication" == 1
-					"addition" == 2
+					"monte: multiplication" == 1
+					"monte: addition" == 2
 			branch swap4
 				and
-					"multiplication" == 2
-					"addition" == 0
+					"monte: multiplication" == 2
+					"monte: addition" == 0
 			branch swap5
 				and
-					"multiplication" == 2
-					"addition" == 1
+					"monte: multiplication" == 2
+					"monte: addition" == 1
 			# swap6 mult 2 add 2, swapping left & right
 			`	The dealer swaps the left and right cards.`
 				goto nextdecision
@@ -1737,53 +1737,51 @@ mission "Three Card Monte"
 					goto middlecard
 				`	"Right."`
 			action
-				"guess" = 2
+				"monte: guess" = 2
 			`	The dealer dramatically puts his hand on the rightmost card that you chose...`
 				goto failedcard
 			label leftcard
 			action
-				"guess" = 0
+				"monte: guess" = 0
 			`	The dealer dramatically puts his hand on the lefttmost card that you chose...`
 				goto failedcard
 			label middlecard
 			action
-				"guess" = 1
+				"monte: guess" = 1
 			`	The dealer dramatically puts his hand on the middle card that you chose...`
 			label failedcard
-			`testing, card spot &[card spot], guess &[guess]. Not scam chance: &[monte: not scam chance] + 50 - &[games played]`	
+			`testing, card spot &[card spot], guess &[guess]. Not scam chance: &[monte: not scam chance] + 50 - &[games played]`
 			branch correct
 				and
-					"card spot" == "guess"
-					random < "monte: not scam chance" + 50 - 25 * "games played"
+					"monte: card spot" == "monte: guess"
+					random < "monte: not scam chance" + 50 - 25 * "monte: games played"
 			`	And flips your chosen, decidedly non-ace card. You've lost 1000 credits this round.`
 			`	He then moves his hand to reveal that the left card was the ace.`
 				to display
 					or
 						and
-							"card spot" == 0
-							"card spot" != "guess"
+							"monte: card spot" == 0
+							"monte: card spot" != "monte: guess"
 						and
-							"card spot" != 0
-							"card spot" == "guess"
+							"monte: card spot" != 0
+							"monte: card spot" == "monte: guess"
 			`	He then moves his hand to reveal that the middle card was the ace.`
 				to display
 					or
 						and
-							"card spot" == 1
-							"card spot" != "guess"
+							"monte: card spot" == 1
+							"monte: card spot" != "monte: guess"
 						and
-							"card spot" != 1
-							"card spot" == "guess"
-						and
-							"card spot" != 2
-							"card spot" == "guess"
+							"monte: card spot" != 1
+							"monte: card spot" != 2
+							"monte: card spot" == "monte: guess"
 			`	He then moves his hand to reveal that the right card was the ace.`
 				to display
 					and
-						"card spot" == 2
-						"card spot" != "guess"
+						"monte: card spot" == 2
+						"monte: card spot" != "monte: guess"
 			branch scammed
-				"card spot" == "guess"
+				"monte: card spot" == "monte: guess"
 			`	"Better luck next time."`
 				goto again
 			label scammed
@@ -1797,13 +1795,13 @@ mission "Three Card Monte"
 				payment 2000
 			label again
 			branch cutoff
-				"games played" < 3
+				"monte: games played" < 3
 			`	The dealer looks spooked by some unseen authorities and shoos you away, quickly packing up and disappearing into the spaceport.`
 				goto trueending
 			label cutoff
 			`	The dealer gives you a look. "Fancy another game?"`
 			action
-				"games played" ++
+				"monte: games played" ++
 			choice
 				`	"Of course!"`
 					to display
@@ -1840,26 +1838,27 @@ mission "Three Card Monte"
 				goto trueending
 			label bookit
 			action
-				clear "games played"
-				clear "multiplication"
-				clear "addition"
-				clear "card spot"
-				clear "guess"
-				clear "step"
+				clear "monte: games played"
+				clear "monte: multiplication"
+				clear "monte: addition"
+				clear "monte: card spot"
+				clear "monte: guess"
+				clear "monte: step"
 				clear "monte: not scam chance"
 				clear "monte: scammed"
+				"reputation: Pirates" -= 10
 			`	You bolt for the <flagship>.`
 			`	"After them!" the dealer shouts, while his men leap into pursuit, curses and boots echoing behind you. The sound of commotion behind you dissolves as you make it aboard your ship before they can catch up.`
 				launch
 			label trueending
 			`	You leave the gambling game for your ship.`
 			action
-				clear "games played"
-				clear "multiplication"
-				clear "addition"
-				clear "card spot"
-				clear "guess"
-				clear "step"
+				clear "monte: games played"
+				clear "monte: multiplication"
+				clear "monte: addition"
+				clear "monte: card spot"
+				clear "monte: guess"
+				clear "monte: step"
 				clear "monte: not scam chance"
 				clear "monte: scammed"
 
