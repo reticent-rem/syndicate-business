@@ -1669,7 +1669,7 @@ mission "Three Card Monte"
 			action
 				"monte: games played" = 0
 				"monte: not scam chance" = "reputation: Pirate" / 10 + 50
-				"monte: not scam chance" >?= 10 # 10% floor, so always at least 60% of not being scammed first round 
+				"monte: not scam chance" >?= 10 # 10% floor, so always at least a 60% of not being scammed first round, meaning the player always comes out ahead in the first game
 			label newgame
 			`	The dealer waits expectantly.`
 			choice
