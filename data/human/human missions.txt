@@ -9574,6 +9574,631 @@ event "syndicate business 100m investment done"
 
 event "syndicate business vip eligible"
 
+mission "Syndicate Business 10.1 A 100m Expansion Update"
+	substitutions
+		"<currentchoice>" "a conventional"
+		"<currentchoice>" "a profitable"
+			has "Syndicate Business expansion 100m evil"
+		"<currentchoice>" "an impactful"
+			has "Syndicate Business expansion 100m good"
+ 		"<oldchoice>" "a conventional"
+		"<oldchoice>" "a profitable"
+			has "Syndicate Business expansion 10m evil"
+		"<oldchoice>" "an impactful"
+			has "Syndicate Business expansion 10m good"
+	landing
+	to offer
+		has "Syndicate Business 10: done"
+		has "event: syndicate business 100m investment done"
+		or
+			has "Syndicate Business expansion 100m good"
+			has "Syndicate Business expansion 100m neutral"
+			has "Syndicate Business expansion 100m evil"
+	source
+		near Ruchbah 0 20
+	on offer
+		conversation
+			`As you are landing your <model>, you see a message from Howard, the Megaparsec salesman you've made three investments with. The message says:`
+			branch meanopening
+				"syndicate business: mean to Howard" > 0
+			`	"Hey <first>,`
+			`		"I have great news - the CRUCIBLE has been built on Crossroads! I won't bore you with another full report, but I've attached an excerpt covering your new investment.`
+				goto historycomment
+			label meanopening
+			`	"Captain <first> <last>,`
+			`		"The CRUCIBLE has been built on Crossroads. I won't waste time sharing another full report, but you'll find an excerpt attached that covers the impact the latest investment.`
+			label historycomment
+			branch doubleddown
+				or
+					and
+						has "Syndicate Business expansion 10m evil"
+						has "Syndicate Business expansion 100m evil"
+					and
+						has "Syndicate Business expansion 10m neutral"
+						has "Syndicate Business expansion 100m neutral"
+					and
+						has "Syndicate Business expansion 10m good"
+						has "Syndicate Business expansion 100m good"
+
+			# swapped
+			`	Choosing to diversify your approach this time from <oldchoice> to <currentchoice> strategy was a wise move for this investment.`
+				goto openingchoice
+			label doubleddown
+			`		It looks like doubling down on <currentchoice> strategy was the right call for this investment.`
+			label openingchoice
+			branch goodchoice
+				has "Syndicate Business expansion 100m good"
+			branch evilchoice
+				has "Syndicate Business expansion 100m evil"
+			# neutral
+			`		"Nothing dramatic to report, the CRUCIBLE is up and running exactly as planned. Just like I predicted, we're getting steady, repeatable test data that means reliable performance. Just what leadership likes: predicable returns and low headaches.`
+				goto howardbye
+			label goodchoice
+			`		"The facility's performance matches our projections - not flashy, but principled. By investing in upgraded safety protocols we've avoided costly shutdowns, and the people-focused approach has unlocked a wave of creative engineering in the CRUCIBLE's brutal test environment. Leadership loves the superior prototypes and higher prices we'll be able to set.`
+				goto howardbye
+			label evilchoice
+			`		"The facility's hitting a rough patch with turnover - some technicians couldn't be replaced as quickly as desired. Still, returns are through the roof by cutting through red tape and running a stripped-down, low-overhead testing facility. The math is good, and leadership can't argue with the profitability.`
+			label howardbye
+			branch alreadyrich
+				"credits" >= 2000000000
+			`		"Anyway, here's that excerpt. I told the foreman to give you a tour if you ever stop by. I'm also putting together one last deal, but you're going to need more credits. A billion credits, maybe even two billion. This is the big one, its going to be the deal of a lifetime. Keep in touch."`
+				goto signoff
+			label alreadyrich
+			`		"Anyway, here's that excerpt. I told the foreman to give you a tour if you ever stop by. I'm also putting together one last deal. As long as you're keeping two billion around I'll have another investment opportunity for you soon. Stay in touch."`
+			label signoff
+			# There was at least one instance of a player being confused prior to the 100m credit mission set being released, so putting a disclaimer here so players don't wait around for a mission that's not in this release. This should be removed once the next mission is in game
+			`	(Note, the billion credit investment is not yet in game)`
+			`			Howard Vendeur`
+			`			Director of Investor Relations & External Projects, Megaparsec Incorporated`
+			choice
+				`	(Open the excerpt.)`
+				`	(Close the message.)`
+					decline
+			label sectionmarked
+			`	You open the attachment noted by Howard:`
+			branch goodchoicesec2
+				has "Syndicate Business expansion 10m good"
+			branch evilchoicesec2
+				has "Syndicate Business expansion 10m evil"
+			# neutral 2
+			`	Crossroads CRUCIBLE testing facility continues to meet projections, with healthy margins and steady returns from new designs. Iterative improvements have kept returns slightly above forecasts. The campus's dedicated technology center, production facility, and integrated employee housing, combined with direct trials in the planet's harsh environment, provide a strong foundation for future product development.`
+				goto reportend
+			label goodchoicesec2
+			`	Megaparsec remains deeply committed to the communities in which we operate - partnering and investing to improve the lives of those local to the CRUCIBLE testing facility. While direct financial returns have been modest, the campus's people-first model has built a resilient, highly skilled workforce and durable local infrastructure. The CRUCIBLE's dedicated technology center, production facility, and community center, combined with direct trials in the planet's harsh environment, create a foundation for long-term innovation and social value that provides dividends beyond short-term profit cycles.
+				goto reportend
+			label evilchoicesec2
+			`	Crossroads CRUCIBLE testing facility, launched as a profit-first venture, posts strong, above-forecast returns. Accelerated iteration cycles, maximal facility utilization, and low labor costs have pushed designs to market fast. The campus's  technology center, production lines, and on-site housing, combined with direct trials in the planet's harsh environment, maximize both throughput and profits despite elevated staff turnover and safety violations.`
+			label reportend
+			`	That marks the end of the excerpt that Howard shared.`
+				decline
+
+
+
+# syndicate business vip eligible
+
+# this is more for flavor than anything impactful gameplay-wise, since the player has already invested enough credits to buy over 70 Quicksilvers, and can pay for the crew of hundreds.
+mission "Syndicate Business: VIP Megaparsec Corporate Security"
+	# invisible
+	landing
+	repeat
+	source 
+		government "Syndicate"
+	to offer
+		has "event: syndicate business vip eligible"
+		not "Player's Megaparsec Corporate Security: declined"
+		not "Player's Megaparsec Corporate Security: active"
+	to complete
+		never
+	on offer
+		conversation
+			action
+				clear "event: syndicate business corporate security"
+			`You receive an message that, as a 'Valued Investment Partner' with Megaparsec, you've been offered a Corporate Security detail within Syndicate space.`
+			choice
+				`	(Accepti the offer)`
+				`	(Decline the security detail)`
+					decline
+			action
+				event "syndicate business vip eligible" 365
+			`	A response arrives almost instantly: gratitude for you for your valued partnership and a note that two Quicksilvers have been assigned to protect you within the Syndicate.`
+	npc save
+		government "Syndicate Corporate Security (for Player)"
+		personality coward disables hunting merciful restricted unconstrained
+		system Mirfak
+		ship "Quicksilver (Ramscoop)" "MP-CS-365"
+		ship "Quicksilver (Ramscoop)" "MP-CS-951"
+
+
+
+government "Syndicate Corporate Security (for Player)"
+	swizzle 4
+	color "governments: Syndicate"
+	"display name" "Syndicate CorpSec"
+	"player reputation" 1000
+	"attitude toward"
+		"Merchant" .01
+		"Syndicate" .01
+		"Pirate" -.01
+		"Pirate (Devil-Run Gang)" -.01
+		"Korath" -.01
+		# more helpful to the player than other governments
+		"Bounty Hunter" -.01
+		"Bounty" -.01
+	"bribe" .08
+	"friendly hail" "friendly syndicate"
+	"friendly disabled hail" "friendly disabled"
+	"hostile hail" "hostile syndicate"
+	"hostile disabled hail" "hostile disabled"
+	"travel restrictions"
+		government "Republic"
+		government "Pirate"
+
+ship "Quicksilver" "Quicksilver (Ramscoop)"
+	outfits
+		"Particle Cannon" 2
+		"Dwarf Core"
+		Supercapacitor 4
+		"D14-RN Shield Generator"
+		"Water Coolant System"
+		"Capybara Reverse Thruster"
+		"Greyhound Plasma Steering"
+		"Greyhound Plasma Thruster"
+		Hyperdrive
+		Ramscoop
+
+
+mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
+	to offer
+		has "Syndicate Business 10: done"
+		has "event: syndicate business 100m investment done"
+		or
+			has "Syndicate Business expansion 100m good"
+			has "Syndicate Business expansion 100m neutral"
+			has "Syndicate Business expansion 100m evil"
+	source "Crossroads"
+	substitutions
+		"<employee adjective>" "haggard"
+		"<employee adjective>" "flustered"
+			has "Syndicate Business expansion 100m good"
+		"<employee adjective>" "gaunt"
+			has "Syndicate Business expansion 100m evil"
+		"<honorific>" "Captain <last>"
+		"<honorific>" <first>
+			has "Syndicate Business expansion 100m good"
+		"<honorific>" "Boss <last>" 
+			has "Syndicate Business expansion 100m evil"
+		"<digital bulletin 1>" "Weekly KPIs for Design & Testing: 82% tests passed (target 85%), 147 tickets closed (target 150), 12 components finalized (target 10)"
+		"<digital bulletin 1>" "Team Shoutout: Huge thanks to the aero-simulation team for catching the M-189S2 prototype's turbulence error before physical testing. Team lunch on us next Friday!"
+			has "Syndicate Business expansion 100m good"
+		"<digital bulletin 1>" "At-Risk Performers (remediation required to avoid termination): ${male names} ${family names}, Peter ${family names}, ${human names} ${family names}"
+			has "Syndicate Business expansion 100m evil"
+		"<digital bulletin 2>" "Motivational Quote of the Day: 'Smart workers know that productivity is key. Smart workers choose to work both smarter and harder.'"
+		"<digital bulletin 2>" "Plant Swap: Bring a cutting, take a cutting. This week's featured plant is an off-world Bluestone grass."
+			has "Syndicate Business expansion 100m good"
+		"<digital bulletin 2>" "Unmet Deadline (H-039 Prototype): Final delivery missed by 48 hours, project budget to be balanced by salary clawbacks until remediation."
+			has "Syndicate Business expansion 100m evil"
+		"<digital bulletin 3>" "Weekly Safety Snapshot: Three lost-time incidents this week totaling 48 minutes of lost productivity. Please report near-miss incidents within 12 hours."
+		"<digital bulletin 3>" "Community Notice: Charity Hovercraft Race this Saturday at B3 east hangar. Childcare vouchers available."
+			has "Syndicate Business expansion 100m good"
+		"<digital bulletin 3>" "Mandatory Overtime Notice: All employees working in Materials Lab must remain onsite until dismissed by their Director. Noncompliance will result in a disciplinary review."
+			has "Syndicate Business expansion 100m evil"
+		"<employee hw>" "I actually don't know how you'll take this, but please listen"
+		"<employee hw>" "I know that you're a by-the-book type investor, but please listen"
+			and
+				has "Syndicate Business expansion 100m neutral"
+				has "Syndicate Business expansion 10m neutral"
+		"<employee hw>" "I know that you care, given all you've done for people like us on Crossroads"
+			and
+				has "Syndicate Business expansion 100m good"
+				has "Syndicate Business expansion 10m good"
+		"<employee hw>" "I know that you're a cutthroat investor, so this might be a tough sell, but I have to try"
+			and
+				has "Syndicate Business expansion 100m evil"
+				has "Syndicate Business expansion 10m evil" 
+	on offer
+		conversation
+			`You drift along the low, sun-scarred stone sheds of the spaceport, then loop back to your ship. Leaning against your <model> is a bored man in a neat driver's cap and suit, battered placard in hand. He registers you and straightens with an almost military quickness: coat smoothed, shirt tucked, sign lifted so that the stencil reads in polished letters:`
+			`		Captain <first> <last>`
+			`		CRUCIBLE Tour`
+			`	His smile is practiced, just bright enough to pass for warmth. He checks his watch, touches his cap's brim in greeting, and says, "<honorific>, I'm to take you to your CRUCIBLE tour." You remember Howard's promise that you'd get a tour of your investment in Megaparsec's new research facility, this must be it.`
+			choice
+				`	"Lets get going."`
+				`	"Maybe later."`
+					defer
+				`	"No thanks."`
+					decline
+			`	He escorts you to a sleek hovercar and opens the door with a rehearsed, deferential sweep. The seal hisses shut with a pressurized whisper; the planet's metallic tang snaps away, replaced by the warm, oiled scent of leather and a faint citrus bite of cleaning products.`
+			# mining pitchblende, processing yellowcake (and pretending the color is like early processing practices) 
+			`	Hours pass in a gray blur of blighted plains as blue and purple tumbleweeds cartwheel across the sands. Far off, a uranium mine coughs twin plumes of yellow and black dust that vanish into the growing sandstorm. Outside, the sky darkens and the hovercar shudders under the wind, but the driver remains composed, hands steady on the wheel as the storm rages on.`
+			`	The storm reaches its fiercest pitch and a faint silhouette reveals itself: a geodesic dome ringed by a multi-story building, planted at the base of a lone hill that rises from the barren wasteland.`
+			`	As you close the distance, you notice that both the dome and encircling ring are made of curved glass, and that the hill's face is marred by an abrupt stone terrace halfway up, pocked by small doors and windows. Two roads peel away from either end of the hill to loop the entire campus. Your hovercar sweeps past the ring-encircled dome to slip onto the right-end road that cuts directly into the hill itself.`
+			`	Inside the hill's threshold waits a serious man in an ill-fitting suit, flanked by two assistants. Your driver opens the door, and the foreman steps forward: "<honorific> - welcome to the CRUCIBLE."`
+			choice
+				`	"Thanks, I'm excited for the tour!"`
+					goto welcomecrucible
+				`	"I changed my mind, driver, take me back to my ship."`
+			`	The foreman looks at you in bewilderment, then continues standing uncomfortably. "You've driven for hours to get here, and we have the entire VIP tour ready for you. You came all the way here just to waste everyone's time and not see anything?"`
+			choice
+				`	"Yes."`
+				`	"Of course not, I was only joking. On with the tour!"`
+					goto welcomecrucible
+			`	The drive back to your ship is long, silent, and palpably uncomfortable for your driver.`
+				decline
+			label welcomecrucible
+			`	The foreman exhales, relief softening his weathered face as he clasps your hand in a callused shake. He steers you toward a squat hovercart, of course Megaparsec branded. The foreman slides into the driver's seat with an easy authority, and the hovercart glides through the underground passages while he explains the CRUCIBLE's purpose.`
+			`	"The CRUCIBLE designs and prototypes new performance vehicles for Megaparsec - from tiny personal repulsors to heavy utility carriers and everything in between," he says, tapping the hovercraft's side. "This one? Born in a room much like the one we're about to see."`
+			`	He sketches the campus in a few broad strokes as the hovercart hums on: the large geodesic dome is the Community Center, where families live and workers breathe off-shift; the multi-story glass band encircling it is the Applied Technology Center, where designers wrangle exotic simulations and coax impossible ideas into schematics; and the hill you've tunneled into is the Prototype Production Facility, where drawings are made real and prototypes run the gauntlet of road tests. He leans from the driver's seat, voice dropping into a conspiratorial rasp, "The CRUCIBLE's here for a reason - these are some of the planet's worst storms. If it runs here, it runs anywhere."`
+			`	The tunnel opens into a cavernous lift bay and the hovercart eases to a stop. You feel the floor rising as the foreman turns to you, suddenly formal again, "We've reached the start of the tour - the Applied Technologies Center."`
+			choice
+				`	"Let's go!"`
+					goto buildroomintro
+				`	(Wait a moment.)`
+			`	The foreman continues to look at you expectantly for another few seconds, then looks down to fiddle with his tie as the lift bay doors open. As they finish opening, he repeats himself, "Ah yes, the Applied Technologies Center."`
+			label buildroomintro
+			branch "good buildroom intro"
+				has "Syndicate Business expansion 100m good"
+			branch "evil buildroom intro"
+				has "Syndicate Business expansion 100m evil"
+			# neutral
+			`	The lift bay doors reveal a wide, curved corridor that rings the whole building. Cold white panels wash the floor in a bright fluorescence. On either side, rows of doors to labs, conference rooms and offices are interspaced with digital bulletin boards teeming with KPIs, motivational quotes, and corporate announcements. A vending machine hums in a hallway alcove; a slightly <employee adjective> employee nurses a stale coffee and scrolls a well-worn datapad beside it. The foreman steers you toward a door backlit with the words: 'Virtual Build Room.'`
+				goto buildroomintro2
+			label "good buildroom intro"
+			`	The lift bay doors reveal a cavernous, curved corridor that rings the whole building. Skylights are more mosaic panes in the constant sandstorms that glow with an orange haze. Elegant sconces simulate natural daylight; between them, rows of doors to labs, conference rooms and offices are interspaced with digital bulletin boards bright with employee appreciations, wellness activities, and community notices. The smell of coffee drifts from a hallway alcove - the office pantry. A slightly <employee adjective> employee taps a brand-new datapad impatiently as they pull a fresh latte from the pantry's espresso machine. The foreman directs you toward a door backlit with the words: 'Virtual Build Room.'`
+				goto buildroomintro2
+			label "evil buildroom intro"
+			`	The lift bay doors reveal a cramped, curved corridor that rings the building. Harsh pale panels strobe the floor with a stuttering fluorescence. On either side, rows of doors to labs, conference rooms and offices are interspaced with digital bulletin boards bristling with rankings of "at-risk" performers, unmet deadlines, and mandatory overtime notices. A broken vending machine sits alone in a dark alcove. A <employee adjective> employee stares at one of the names on the board with hollow eyes, a cracked datapad in hand. The foreman steers you toward a door backlit with the words: 'Virtual Build Room.'`
+			label buildroomintro2
+			choice
+				`	(Follow the foreman into the Virtual Build Room.)`
+					goto buildroomintro3
+				`	(Say hello to the employee.)`
+				`	(Take a closer look at one of the digital bulletin boards.)`
+					goto bulletin
+			action
+				set "syndicate business: seen employee"
+			`	The <employee adjective> employee turns to you in surprise, then recognition. Before they can respond, the foreman more aggressively ushers you into the 'Virtual Build Room.' "We have a tight timetable, on with the tour!"`
+				goto buildroomintro3
+			label bulletin
+			action
+				set "syndicate business: seen bulletin"
+			`	You take a closer look at one of the digital bulletin boards before following the foreman into the 'Virtual Build Room':`
+			`		1) <digital bulletin 1>`
+			`		2) <digital bulletin 2>`
+			`		3) <digital bulletin 3>`
+			``
+			label buildroomintro3
+			branch "good buildroomintro3"
+				has "Syndicate Business expansion 100m good"
+			branch "evil buildroomintro3"
+				has "Syndicate Business expansion 100m evil"
+			# Virtual build room
+			# neutral
+			`	You enter the 'Virtual Build Room' to find a series of bland, functional desks surrounding a large, central holographic pedestal projecting a life-sized hovercraft. A few stations have personal touches - the odd family photo or calendar - though most are cluttered with papers and files.`
+			`	Monitors crowd every desk, showing charts, graphs, and live models of hovercraft components; when an engineer makes a tweak it flashes across their screens, then a moment later the central hologram shimmers to reflect the change.`
+			`	"Instead of wasting time and materials on physical models, we run all of our initial design simulations here," the foreman says. "We can spot and fix major flaws months before a single part is manufactured. These well-established testing protocols let us produce solid designs at a steady clip. We even run virtual wind-tunnel and stress tests right here."`
+			`	He nods to an engineer; wind-lines appear around the hovercraft and a simulated road slides beneath it. The holographic model glides for a minute before detonating in a brilliant pyrotechnic simulation. Diagnostic logs cascade across the hologram with points-of-failure while a screen shows a yellow KPI shift from 82% to 81% of tests passed. The engineer looks stressed, while the foreman carries on. "As you can see, it beats rebuilding crushed physical prototypes by a mile! Now, on to the Community Center."`
+				goto buildroomending
+			label "good buildroomintro3"
+			`	You enter the 'Virtual Build Room' to find a ring of tidy, comfortable desks surrounding a large, central holographic pedestal projecting a life-sized hovercraft. Most stations have personal touches - family photos, tiny desk gardens, neat paperweights - while remaining well-organized, tools and tablets stacked with care. Several desks have the same pots of a small blue grass. Living moss climbs two walls and softens the room against the background hum of quiet collaboration.`
+			`	Well-kept monitors fill every desk, showing charts, graphs, and live models of hovercraft components; when an engineer makes a tweak it flashes across their screens, then a moment later the central hologram shimmers to update with the change.`
+			`	"Instead of wasting time and materials on crude prototypes, we run our initial design simulations here," the foreman says. "We can spot and fix major flaws months before a single part is manufactured. These cutting-edge testing protocols, redundant safety nets, and supply-chain checks, let us produce green, efficient designs at a sustainable pace. We run virtual wind-tunnel and stress tests right here. Unfortunately, I don't think we can get a demonstration tod-"`
+			`	He's cut-off by a loud chime from an engineer's desk; wind-lines appear around the hovercraft and a simulated road slides beneath it. The holographic model glides for a minute before detonating in a controlled pyrotechnic simulation. Diagnostic logs bloom across the hologram with emissions data, points-of-failure, and suggested fixes. The foreman raises an eyebrow at the engineer, who gives him a wink. The foreman turns to you, "We had a little issue with the turbulence simulation earlier, but we sure have an all star team! As you can see, this beats rebuilding crushed physical prototypes by a mile while keeping our people and planet intact. Now, on to the Community Center."`
+				goto buildroomending
+			label "evil buildroomintro3"
+			`	You enter the 'Virtual Build Room' to find a ring of cramped desks shoved around a large, central holographic pedestal projecting a life-sized hovercraft. Stations are bare of personal touches, most sag under disheveled stacks of documents.`
+			`	Dirty monitors crowd every desk, showing concerning charts, blinking red dashboards, and live models of hovercraft components; when an exhausted engineer makes a tweak it flashes across their screens, then a few moments later the central hologram flickers to redraw. Harsh strip lights hum overhead and a stale odor hangs in the air.`
+			`	"Instead of wasting time and money on slow physical models, we run our design simulations here," the foreman says. "We find the largest problems fast, slash iteration time, and push products to market before anyone else dares. We cut through the red tape to squeeze out the maximum return from every design - safety may be a suggestion, but deadlines are not."`
+			`	He barks at an engineer; wind-lines warble around the hovercraft and a simulated road slides beneath it. The holographic model glides briefly before detonating in a fuzzy pyrotechnic simulation. Flashing red alerts and loss-estimates bloom across the hologram. "As you can see, it beats rebuilding crushed physical prototypes by a mile - and cuts the design cycle in half. Now, on to the Community Center."`
+			label buildroomending
+			choice
+				`	"Great, lets go."`
+					goto communityintro1
+				`	(Try to say hello to the <employee adjective> employee you saw earlier.)`
+					to display
+						not "syndicate business: seen employee"
+				`	(Take a look at a bulletin board before leaving.)`
+					to display
+						not "syndicate business: seen bulletin"
+					goto bulletin2
+			`	You try to find the <employee adjective> employee from earlier, but the foreman more aggressively ushers you onward from the 'Virtual Build Room.' "We have a tight timetable, on with the tour!"`
+				goto communityintro1
+			label bulletin2
+			`	You take a closer look at one of the digital bulletin boards after exiting the 'Virtual Build Room,' before following the foreman to the Community Center:`
+			`		1) <digital bulletin 1>`
+			`		2) <digital bulletin 2>`
+			`		3) <digital bulletin 3>`
+			``
+			label communityintro1
+			`	He steers you out of the 'Virtual Build Room' and down a narrowing corridor on the inner side of the ring's larger hallway. The hum of work softens as you emerge inside the base of the geodesic Community Center dome you glimpsed on arrival.`
+			`	The interior is enormous, the dome's triangular panes shimmer with the hypnotic patterns of the near-eternal sandstorm outside. Without the globe of artificial daylight set in the dome's crown, the place would be a murky sepia - instead the globe shines a semblance of normalcy below. "The Community Center sits under a high-clarity dome to protect us from radioactive storms and give us some kind of daylight, or a pale imitation, anyway," the foreman shrugs.`
+			branch "good community intro2"
+				has "Syndicate Business expansion 100m good"
+			branch "evil community intro2"
+				has "Syndicate Business expansion 100m evil"
+			# neutral
+			`	The dome's floor is a tiled  patio, arranged into four areas: a plain sloped building labeled 'Employee Housing' hugs one wall; opposite it, a combined cafeteria and general store with picnic tables; a circular building at the dome's center bears the sign 'Recreation Complex'; and the rear quarter of the dome is obscured by an unmarked floor-to-ceiling warehouse. You see a few families having lunch at the picnic tables.`
+			`	"Please take in our community, generously supported by corporate," the foreman says. "All employees are entitled to a furnished one-bedroom apartment, daily subsidized meals at our employer-operated eating facility, and single membership to the Recreation Complex so they can unwind after a hard day's work. Upgrades are available for a fee - extra bedrooms, expanded meal plans, family rec passes." In a flat voice, he says, "Proudly home to a multipurpose gym, a lap pool, an indoor cricket court, and even a repulsorball arena. Ready to break for lunch?"`
+				goto communityintro3
+			label "good community intro2"
+			`	The dome's floor is a soft green grass, laid out in four main areas: a row of small townhomes with front gardens and small personal touches lines one wall; opposite them is a combined cafeteria and general store with communal picnic tables beneath shady fruit trees; a green-roofed circular building at the dome's center bears the sign 'Recreation Complex'; and a modest unmarked storage shed is tucked near the rear of the dome. Kids chase each other across the lawn, and the scent of baking drifts from one of the townhomes.`
+			`	"Please take in our community, supported by corporate green investment," the foreman says proudly. "Employees get furnished townhomes, meals from our community gardens, and family Recreation memberships so that everyone can unwind. We also offer childcare, community pantries, and even have group C hovercraft races on the weekends - employee-run." He gestures to the circular building. "Proudly home to a multipurpose gym, a lap pool, an indoor cricket court, and a repulsorball arena - plus a library, maker spaces, and community classes. Ready for lunch?"`
+				goto communityintro3
+			label "evil community intro2"
+			`	The dome's floor is poured concrete, divided into four zones: a crowded slab labeled 'Employee Dorms' hugs one wall; opposite it is a combined cafeteria and company store with standing tables; a circular building at the dome's center bears the sign 'Recreation Complex'; and the rear half of the dome is sealed off by an unmarked floor-to-ceiling warehouse. You see a handful of workers wolf food at the standing tables.`
+			`	"All employees get a bunk, a locker, one square meal a day, and the odd rec pass for good work. Extras cost extra," the foreman says flatly. "All about throughput - less so luxuries. Ready for lunch?"
+			label communityintro3
+			choice
+				`	"Perfect, I'm starving."`
+					goto communityintro4
+				`	"Repulsorball?"`
+					goto repulsorball
+					to display
+						not "Syndicate Business expansion 100m evil"
+				`	What's that unmarked building at the back?`
+			`	"Just spare parts for the design facility, repulsors and such. Now let's eat!"`
+				goto communityintro4
+			label repulsorball
+			`	"Oh, a fun game. Takes place in a well-cushioned and sealed arena - two teams try to get the repulsorball into the other's goal along the ceiling. The ball's roughly weightless on account of the repulsors, and players get repulsor boots to hop high enough to block and shoot on the goal. Tricky game, but really gets the blood pumping. Now let's eat!"`
+			label communityintro4
+			branch "good lunch1"
+				has "Syndicate Business expansion 100m good"
+			branch "evil lunch1"
+				has "Syndicate Business expansion 100m evil"
+			# neutral - food options are surprisingly hard to think up
+			`	You walk up to the cafeteria, where the foreman flashes a pass and you both grab trays. The choices consist of predictable, mass-produced staples: pre-packaged salads, soups, and sandwiches. The foreman grabs a sandwich before heading out, "I'll grab us a table, take your pick." You looks closer at the menu:`
+			`		Bluestone Greens Mix: Natural, wholesome greens and blues.`
+			`		Porridge: Dependable, Real Grains from Heartland.`
+			`		Turki and Synthetic Swiss: The taste you know, the nutrition you need.`
+			``
+			choice
+				`	(Snag a salad)`
+				`	(Pick a porridge)`
+				`	(Snatch a sandwich)`
+					goto neutraltwins
+			`	You set your chosen meal on the foreman's waiting table. He's already midway through his sandwich, plastic container crinkling. He looks over at your tray, "Interesting choice."`
+				goto lunch2
+			label neutraltwins
+			`	You set your sandwich on the foreman's waiting table. He's already midway through his, plastic container crinkling. He grins and lifts up a matching sandwich. "Nice choice."`
+				goto lunch2
+			label "good lunch1"
+			`	You walk up to the cafeteria, where the cashier gives the foreman a hearty greeting and you both grab trays. The choices are fresh and varied covering all matters of vibrant salads, heirloom soups, and artisan sandwiches. The foreman picks a panini before heading out, "I'll grab us a table, take your pick." You looks closer at the menu:`
+			`		Market Harvest Salad Bar: Crisp artisan greens and rotating microgreens, endless toppings, and dressings to build your bowl your way.`
+			`		Broth Bar: Pick a simmer, noodle, protein, and fresh garnishes.`
+			`		Gourmet Deli: Rustic loaves or wraps with house-roasted proteins and house-made sauces.`
+			``
+			choice
+				`	(Sculpt your seasonal salad)`
+				`	(Select your savory simmer)`
+				`	(Design your deli delight)`
+					goto goodtwins
+			`	You set your chosen meal on the foreman's waiting table. He's already midway through his gourmet panini, a drip of sauce falling to his plate. He looks over at your tray, "Interesting choice."`
+				goto lunch2
+			label goodtwins
+			`	You set your designer sandwich on the foreman's waiting table. He's already midway through his own, a drip of sauce falling to his plate. He grins and lifts up his panini. "Nice choice."`
+				goto lunch2
+			label "evil lunch1"
+			` 	You walk up to the cafeteria, where the foreman has a brief and heated discussion with a cashier, before grumbling and paying for both of you. You grab a tray, while the foreman leaves with some Myco-kibble to get a table. The choices are few:`
+			`		Nutri-Gruel: Complete nutrition. Zero fuss.`
+			`		Rehydrated Compound Meal (RCM): The future of food, today.`
+			`		Myco-kibble: Treat yourself to a little spore.`
+			``
+			choice
+				`	(Nab some nutri-gruel)`
+				`	(Reach for an RCM)`
+				`	(Make mushroom for myco-kibble)`
+					goto eviltwins
+			`	You set your chosen meal on the foreman's waiting table. He's already midway through his myco-kibble, a fungal pellet falling to the ground. He feigns a frown at your tray, "A truffling choice."`
+				goto lunch2
+			label eviltwins
+			`	You set your bowl of myco-kibble on the foreman's waiting table. He's already midway through his own, a fungal pellet falling to the ground. He grins and lifts up his bowl. "A fellow fun-guy I see, nice choice."`
+			label lunch2
+			`	The foreman's eyes widen. A tentative tap at your shoulder announces the <employee adjective> figure you saw earlier at the Applied Technologies Center. He stands with hands fiddling at his datapad and gives a sheepish half-smile.`
+			`	"Hello... I... I know who you are. You're the investor who paid for this whole thing, right?" His voice is soft and worn. "I've done my homework on you, and <employee hw>. It's been hard for folks - working and caring for our families, planning beyond the next month. Would you... consider financing better benefits here? It would help people a lot." He raises the datapad and looks at the foreman, "I've shared my ideas with him, and I think they'd help a lot of people-"`
+			`	"That would cost twenty million credits," the foreman snaps. "No one here has that kind of money to throw around. I'm so sorry, <honorific>, you shouldn't be bothered with this." The foreman gives you an apologetic look before shooting daggers at the <employee adjective> employee.`
+			choice
+				`	(Shrug non-committedly.)`
+				`	"Fire that man!"`
+					goto fired
+				`	"Of course I'll pay."`
+					goto benefits
+					to display
+						credits > 20000000
+				`	"How about a pizza party?" (7,500 credits)`
+					goto pizza
+					to display
+						credits > 7500
+			action
+				set "syndicate business: crucible shrug"
+			`	His face is frozen, while his chest physically tightens. After a few silent moments, he brings his datapad to his chest and blinks hard, avoiding your gaze. "Thank you... for the time. I'm sorry for bothering you," he whispers, voice small. Datapad clutched desperately to chest, he shuffles away.`
+				goto onwiththetour
+			label benefits
+			action
+				payment -20000000
+				set "syndicate business: crucible benefits"
+			`	The words utterly shock them. Frozen, the foreman and employee turn to each other in stunned silence. A giddy, disbelieving grin comes across the employee's face as he babbles a near-incoherent thanks, tripping over the words.`
+			`	The foreman watches open-mouthed. As you send the credits over, a slow, shocked grin finally spreads across his face. The employee hugs him, then turns to pump your hand in excited thanks. The foreman slowly shakes his head in disbelief as the employee practically skips away.`
+				goto onwiththetour
+			label fired
+			`	The foreman's jaw tightens, then the employee drops to his knees between you, hands clasped, voice breaking. "Please," he chokes, "this is all I have. My family, they need... we can't... please, don't take my job."  `
+			choice
+				`	"Well alright, you can stay."`
+					goto unfired
+				`	"Don't let the door hit you on the way out."`
+			action
+				set "syndicate business: crucible fired"
+			`	The employee casts a desperate look to the foreman, who averts his eyes. "I'm sorry, Peter. Get your things, you heard <honorific>." A security guard arrives, and quietly takes the employee away.`
+				goto onwiththetour
+			label unfired
+			action
+				set "syndicate business: crucible unfired"
+			`	"Oh... thank you, thank you," the employee sniffles, still on the ground. The foreman helps him up to unsteady feet. He hugs his datapad to his chest, whispering, "So sorry for bothering you," and shuffles away, glancing back as if he could still lose everything at any moment.`
+				goto onwiththetour
+			label pizza
+			action
+				payment -7500
+				set "syndicate business: crucible pizza"
+			`	The foreman lights up at once. "Brilliant, that'll do wonders," he says, clapping his hands before trying to steer the employee away with an awkward shove and hollow chuckle. The <employee adjective> employee continues to stand, disappointed, before he catches the hint and forces a smile. "Thank you... pizza's great," before walking off with a reluctant wave.`
+			label onwiththetour
+			`	"Well... on with the tour. Our last stop is the Prototype Production Facility. What do you say?" the foreman looks at you expectantly.`
+			choice
+				`	"On with the tour!"`
+				`	"Lets call it a day."`
+					set "syndicate business: crucible half tour"
+			`	"All right." The foreman guides you in silence back from the geodesic dome to the ring's great hallway, and finally back to the hovercart waiting at the lift bay elevator. You descend, then the foreman drives the hovercart back to the hangar where you began the tour.`
+			branch productionintro3
+				has "syndicate business: crucible half tour"
+			`	"The inside of this hill is the Prototype Production Facility, where we assemble, test, and perfect the designs made at the Applied Technology Center." You walk past doors labeled 'Concept Room,' 'Windtunnel,' 'Bespoke Assembly,' and 'Production Hub,' and finally 'Development Driveway.'`
+			branch "good production intro2"
+				has "Syndicate Business expansion 100m good"
+			branch "evil production intro2"
+				has "Syndicate Business expansion 100m evil"
+			# neutral
+			`	You enter a cavernous hangar where a dozen prototype hovercraft drift atop parking pads - some little more than exposed chassis with loose wiring, others wrapped in gleaming, near-finished hulls that look ready for sale. All of them are fussed over by technicians wielding weld-guns and securing sensors.`
+			`	Overhead lights cast stark shadows, and you smell the signature metallic tang of Crossroads' radioactive air. The foreman walks you to a near-finished model. "This is where we check them after assembly, we throw on sensors, calibrate systems, and then drive them into the worst sandstorms to see which ones make it back."`
+			`	The hangar doors lift and a prototype glides out, a gust of radioactive dust pours in. The foreman coughs into his sleeve, then says with a rough pride, "All the design theories get tested out on the loop - every kind of terrain, every kind of failure. We don't just design for the best, we test for the best.`
+				goto productionintro3
+			label "good production intro2"
+			`	You enter a cavernous hangar where a dozen prototype hovercraft drift atop parking pads - some little more than exposed chassis with neat, labeled wiring, others sheathed in reclaimed composites, near-finished hulls that look ready for sale. Even two labeled 'Team Tech' and 'Team Prod' for the employee races. All of them are fussed over by technicians carefully wielding weld-guns and securing sensors.`
+			`	Overhead, warm lights cast soft shadows, and air scrubbers make Crossroads' signature metallic tang disappear behind a faint citrus scent. The foreman guides you to a near-finished model. "This is where we check them after assembly, we throw on sensors, calibrate systems, and then drive them into the worst sandstorms to prove they're safe enough to protect crews and communities."`
+			`	The hangar doors lift and a prototype glides out, a gust of radioactive dust pours in - almost immediately filtered out by the air scrubbers. The foreman takes a deep breath, then says with a rough pride, "All the design theories get tested on the loop - every terrain, every failure - so their future drivers can safely go home after every drive. We don't just design for the best, we design for people.`
+				goto productionintro3
+			label "evil production intro2"
+			`	You enter a crudely carved hangar where a dozen prototype hovercraft float atop scuffed pads - some little more than exposed chassis with frayed wiring, others wrapped in cheap, production-ready shells that look built to sell fast. Technicians move with frantic urgency, swiftly wielding weld-guns and slapping on sensors.`
+			`	Overhead lights cast stark shadows, and the signature metallic tang of Crossroads' radioactive air is almost overwhelming. The foreman jostles you to a near-finished model. "This is where we check them after assembly, we slap on sensors, tune systems, and drive them into the worst sandstorms to see what breaks - whatever comes back pays for the ones that don't."`
+			`	The hangar doors lift and a prototype sputters out, a gale of radioactive dust pours in. Most of the crew doesn't respond, but the foreman coughs a fit into his sleeve. Then, he says "All the design theories get squeezed for performance on the loop - every terrain and condition and failure to get that last bit of profit. Not designed for the best, but the best value.`
+			action
+				set "syndicate business: crucible full tour"
+			label productionintro3
+			`	"And that just about concludes the our tour. Shall I take you back to your driver?"`
+			choice
+				`	"Yes, please."`
+					goto ending
+				`	"No."`
+			`	"Oh, um... that was a rhetorical question. You won't find your way back by yourself."`
+			choice
+				`	"You're right, lead me back please."`
+					goto ending
+				`	"I'll manage."`
+			label lost
+			action
+				"syndicate business: aimless wandering" ++
+			branch aimlesslywandered
+				"syndicate business: aimless wandering" > 2
+			`	The foreman, utterly perplexed, waits and then follows you as you confidently head off down a hallway.`
+			`	After thirty or forty minutes, the foreman again requests to lead you back.`
+			choice
+				"I suppose I won't find my way back otherwise."
+					goto ending
+				"No, I'm sure I can do it myself."
+					goto lost
+			label aimlesslywandered
+			`	Miraculously, after a mere two hours, you successfully complete what should have been ten minute walk back to the hovercar.`
+			label ending
+			`	Your driver is waiting patiently in the hovercar in the hangar where you first entered. The foreman quickly pockets a handwritten note before giving his closing remarks.`
+			`	"Thank you for taking the time to visit us today. <closing focus>. It's been a pleasure showing you our operations firsthand, <honorific>, and I hope what you've seen today inspires positive conversations with our leadership. We hold nothing but respect for you and the bosses, and we would all appreciate it if you could put in a good word for all the hard work that happens here to make the CRUCIBLE a success."`
+			choice
+				`	"Eh... we'll see."`
+				`	"Of course I will, this has been great."`
+					goto happybye
+				`	"After what I've seen? Not a chance."`
+				`	"What was your name again?"`
+					goto bobtheforeman
+			`	"I see. I wish you a safe journey back," the foreman's face and voice are flat.`
+				goto finalsendoff
+			label happybye
+			`	The foreman's face opens in a slight grin. "I'm glad, I hope you have a safe journey back."`
+				goto finalsendoff
+			label bobtheforeman
+			`	The foreman looks slightly surprised, "Oh, my name is Robert. But you can call me Bob. I hope you have a safe journey back."`
+				set "syndicate business: bob the foreman"
+			label finalsendoff
+			action
+				clear "syndicate business: aimless wandering"
+			`	You give the foreman one last wave and climb into the hovercar, the CRUCIBLE vanishing in the storm as you drive away.`
+				decline
+
+
+
+mission "Syndicate Business 10.2 B Tour Feedback"
+	substitutions
+		"<foreman>" "the foreman"
+		"<foreman>" "Bob the foreman"
+			has "syndicate business: bob the foreman"
+		"<tour>" "the tour"
+		"<tour>" "the full-length tour"
+			has "syndicate business: crucible half tour"
+ 		"<greeting>" "Hey <first>"
+		"<greeting>" "Captain <last>"
+			"syndicate business: mean to Howard" > 0
+		"<liar>" "The driver reported that you received a full tour as well. Again, appreciate the feedback."
+		"<liar>" "The driver's report was a touch briefer than yours, but no matter. Again, appreciate the feedback."
+			and
+				not "syndicate business: crucible full tour"
+				"syndicate business: mean to Howard" <= 0
+		"<liar>" "Funny thing: the driver's report told me a different story. Still, I'd be very interested in your detailed take on the full tour, and how they match up to the logs."
+			and
+				not "syndicate business: crucible full tour"
+				"syndicate business: mean to Howard" > 0
+	landing
+	to offer
+		has "Syndicate Business 10.1 B 100m CRUCIBLE Tour: declined"
+		random < 20
+	source
+		near Ruchbah 0 20
+	on offer
+		conversation
+			`Just after landing the <ship>, you see a message from Howard, the Megaparsec salesman you've made three investments with. The message says:`
+			`	"<greeting>,`
+			branch meanopening
+				"syndicate business: mean to Howard" > 0
+			`		"I hope your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE while you were planetside to give you a chance to see what you've funded. It's a remarkable place once you're past the storms, isn't it?`
+				goto historycomment
+			label meanopening
+			`		"I trust your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE while you were planetside to give you a chance to see what we've funded.`
+			label historycomment
+			`	When you have a moment, let me know what you thought of the facility, and the people running it. I'm curious to hear your impressions.`
+			`			Howard Vendeur`
+			`			Director of Investor Relations & External Projects, Megaparsec Incorporated`
+			choice
+				`	(Admit that you didn't go on <tour>.)`
+					goto admission
+					to display
+						not
+							has "syndicate business: crucible full tour"
+				`	(Say that they were acceptable and that <foreman> gave a reasonable tour.)`
+					goto fine
+				`	(Say that they were great, and heap praise on <foreman> for giving a great tour.)`
+					goto great
+				`	(Tell Howard it was awful and that <foreman> did a terrible job.)`
+					goto awful
+			label admission
+			`	<greeting>,`
+			`		No harm done - the driver's report beat your message. Appreciate the candor, keep in touch.`
+				goto signoff
+			label fine
+			`	<greeting>,`
+			`		Thanks for the quick note. I'm glad it met expectations. I'll mark it down and let the team know.`		
+				goto signoff
+			label great
+			action
+				"syndicate business: mean to Howard"--
+			`	<greeting>,`
+			`		That's great to hear, thank you. I'll make sure the foreman and everyone at the CRUCIBLE know that your were impressed - they'll be proud. Much appreciated.`		
+				goto signoff
+			label awful
+			action
+				"syndicate business: mean to Howard"++
+			`	<greeting>,`
+			`		I'm sorry to hear that. That's not the experience we aim for. I'll contact the foreman to investigate and correct whatever went wrong.`
+			label signoff
+			`		<liar>`
+			`			Howard Vendeur`
+			`			Director of Investor Relations & External Projects, Megaparsec Incorporated`
+				decline
+
+
+			# maybe 2nd message from foreman / Peter? Pizza party note, fire report, doodle from thankful family, etc
+
 
 mission "Timothy Radrickson 1: Stowaway"
 	invisible
