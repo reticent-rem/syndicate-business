@@ -10042,9 +10042,11 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 			`	"Well... on with the tour. Our last stop is the Prototype Production Facility. What do you say?" the foreman looks at you expectantly.`
 			choice
 				`	"On with the tour!"`
+					goto "continuing the tour"
 				`	"Lets call it a day."`
-					action
-						set "syndicate business: crucible half tour"
+			action
+				set "syndicate business: crucible half tour"
+			label "continuing the tour"
 			`	"All right." The foreman guides you in silence back from the geodesic dome to the ring's great hallway, and finally back to the hovercart waiting at the lift bay elevator. You descend, then the foreman drives the hovercart back to the hangar where you began the tour.`
 			branch productionintro3
 				has "syndicate business: crucible half tour"
@@ -10131,7 +10133,7 @@ mission "Syndicate Business 10.2 B Tour Feedback"
 			has "syndicate business: crucible half tour"
 		"<greeting>" "Hey <first>"
 		"<greeting>" "Captain <last>"
-			has "syndicate business: mean to Howard" > 0
+			"syndicate business: mean to Howard" > 0
 		"<liar>" "The driver reported that you received a full tour as well. Again, appreciate the feedback."
 		"<liar>" "The driver's report was a touch briefer than yours, but no matter. Again, appreciate the feedback."
 			and
