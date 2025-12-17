@@ -9619,7 +9619,6 @@ mission "Syndicate Business 10.1 A 100m Expansion Update"
 					and
 						has "Syndicate Business expansion 10m good"
 						has "Syndicate Business expansion 100m good"
-
 			# swapped
 			`	Choosing to diversify your approach this time from <oldchoice> to <currentchoice> strategy was a wise move for this investment.`
 				goto openingchoice
@@ -9644,9 +9643,9 @@ mission "Syndicate Business 10.1 A 100m Expansion Update"
 			`		"Anyway, here's that excerpt. I told the foreman to give you a tour if you ever stop by. I'm also putting together one last deal, but you're going to need more credits. A billion credits, maybe even two billion. This is the big one, its going to be the deal of a lifetime. Keep in touch."`
 				goto signoff
 			label alreadyrich
-			`		"Anyway, here's that excerpt. I told the foreman to give you a tour if you ever stop by. I'm also putting together one last deal. As long as you're keeping two billion around I'll have another investment opportunity for you soon. Stay in touch."`
+			`		"Anyway, here's that excerpt. I told the foreman to give you a tour if you ever stop by. I'm also putting together one last deal. Hang on to your billions, I'm setting up one last deal for you - the deal of a lifetime. Keep in touch."`
 			label signoff
-			# There was at least one instance of a player being confused prior to the 100m credit mission set being released, so putting a disclaimer here so players don't wait around for a mission that's not in this release. This should be removed once the next mission is in game
+			# There was at least one instance of a player being confused prior to the 100m credit mission set being released, so putting a disclaimer here so players don't wait around for a mission that's not in this release. This should be removed once the next mission is in game.
 			`	(Note, the billion credit investment is not yet in game)`
 			`			Howard Vendeur`
 			`			Director of Investor Relations & External Projects, Megaparsec Incorporated`
@@ -9657,17 +9656,17 @@ mission "Syndicate Business 10.1 A 100m Expansion Update"
 			label sectionmarked
 			`	You open the attachment noted by Howard:`
 			branch goodchoicesec2
-				has "Syndicate Business expansion 10m good"
+				has "Syndicate Business expansion 100m good"
 			branch evilchoicesec2
-				has "Syndicate Business expansion 10m evil"
+				has "Syndicate Business expansion 100m evil"
 			# neutral 2
 			`	Crossroads CRUCIBLE testing facility continues to meet projections, with healthy margins and steady returns from new designs. Iterative improvements have kept returns slightly above forecasts. The campus's dedicated technology center, production facility, and integrated employee housing, combined with direct trials in the planet's harsh environment, provide a strong foundation for future product development.`
 				goto reportend
 			label goodchoicesec2
-			`	Megaparsec remains deeply committed to the communities in which we operate - partnering and investing to improve the lives of those local to the CRUCIBLE testing facility. While direct financial returns have been modest, the campus's people-first model has built a resilient, highly skilled workforce and durable local infrastructure. The CRUCIBLE's dedicated technology center, production facility, and community center, combined with direct trials in the planet's harsh environment, create a foundation for long-term innovation and social value that provides dividends beyond short-term profit cycles.`
+			`	Megaparsec remains deeply committed to the communities in which we operate - partnering and investing to improve the lives of those local to the CRUCIBLE testing facility. While direct financial returns have been modest, the campus's people-first model has built a resilient, highly skilled workforce and durable local infrastructure. The CRUCIBLE's dedicated technology center, production facility, and community center, combined with direct trials in the planet's harsh environment, create a strong foundation for long-term innovation and social value that provides dividends beyond short-term profit cycles.`
 				goto reportend
 			label evilchoicesec2
-			`	Crossroads CRUCIBLE testing facility, launched as a profit-first venture, posts strong, above-forecast returns. Accelerated iteration cycles, maximal facility utilization, and low labor costs have pushed designs to market fast. The campus's technology center, production lines, and on-site housing, combined with direct trials in the planet's harsh environment, maximize both throughput and profits despite elevated staff turnover and safety violations.`
+			`	Crossroads CRUCIBLE testing facility, launched as a profit-first venture, posts strong, above-forecast returns. Accelerated prototyping timelines, maximal facility utilization, and low labor costs have pushed designs to market fast. The campus's dedicated technology center, production facility, and on-site housing, combined with direct trials in the planet's harsh environment, set a strong foundation to maximize both throughput and profits despite elevated staff turnover and realized safety hazards.`
 			label reportend
 			`	That marks the end of the excerpt that Howard shared.`
 				decline
@@ -9678,35 +9677,46 @@ mission "Syndicate Business 10.1 A 100m Expansion Update"
 
 # this is more for flavor than anything impactful gameplay-wise, since the player has already invested enough credits to buy over 70 Quicksilvers, and can pay for the crew of hundreds.
 mission "Syndicate Business: VIP Megaparsec Corporate Security"
-	# invisible
+	invisible
 	landing
 	repeat
 	source
 		government "Syndicate"
 	to offer
 		has "event: syndicate business vip eligible"
-		not "Player's Megaparsec Corporate Security: declined"
-		not "Player's Megaparsec Corporate Security: active"
+		not "Syndicate Business: VIP Megaparsec Corporate Security: declined"
+		not "Syndicate Business: VIP Megaparsec Corporate Security: active"
 	to complete
 		never
 	on offer
 		conversation
 			action
-				clear "event: syndicate business corporate security"
+				clear "event: syndicate business vip eligible"
 			`You receive a message that, as a 'Valued Investment Partner' with Megaparsec, you've been offered a corporate security detail within Syndicate space.`
 			choice
-				`	(Accepti the offer)`
-				`	(Decline the security detail)`
+				`	(Accept the 'VIP' security detail.)`
+				`	(Decline the offer.)`
 					decline
 			action
-				event "syndicate business vip eligible" 365
-			`	A response arrives almost instantly: gratitude for you for your valued partnership and a note that two Quicksilvers have been assigned to protect you within the Syndicate.`
+				event "syndicate business vip eligible" 5
+			`	A response arrives almost instantly: gratitude for you for your valued partnership and a note that you have been assigned a Quicksilver security detail to escort you within Syndicate space.`
+				accept
 	npc save
 		government "Syndicate Corporate Security (for Player)"
-		personality coward disables hunting merciful restricted unconstrained
+		personality coward disables merciful restricted unconstrained
 		system Mirfak
 		ship "Quicksilver (Ramscoop)" "MP-CS-365"
-		ship "Quicksilver (Ramscoop)" "MP-CS-951"
+		ship "Quicksilver (Ramscoop)" "MP-CS-247"
+	npc save
+		government "Syndicate Corporate Security (for Player)"
+		personality coward disables merciful restricted unconstrained
+		system Mirfak
+		ship "Quicksilver (Ramscoop)" "MP-CS-252"
+		ship "Quicksilver (Ramscoop)" "MP-CS-850"
+		to spawn
+			has "Syndicate Business expansion 100m neutral"
+
+				
 
 
 
@@ -9797,7 +9807,7 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 				has "Syndicate Business expansion 10m evil"
 	on offer
 		conversation
-			`You drift along the low, sun-scarred stone sheds of the spaceport, then loop back to your ship. Leaning against your <model> is a bored man in a neat driver's cap and suit, battered placard in hand. He registers you and straightens with an almost military quickness: coat smoothed, shirt tucked, sign lifted so that the stencil reads in polished letters:`
+			`You drift along the low, sun-scarred buildings of the spaceport, then loop back to your ship. Leaning against your <model> is a bored man in a neat driver's cap and suit, battered placard in hand. He registers you and straightens with an almost military quickness: coat smoothed, shirt tucked, sign lifted so that the stencil reads in polished letters:`
 			`		Captain <first> <last>`
 			`		CRUCIBLE Tour`
 			`	His smile is practiced, just bright enough to pass for warmth. He checks his watch, touches his cap's brim in greeting, and says, "<honorific>, I'm to take you to your CRUCIBLE tour." You remember Howard's promise that you'd get a tour of your investment in Megaparsec's new research facility, this must be it.`
@@ -9807,16 +9817,16 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 					defer
 				`	"No thanks."`
 					decline
-			`	He escorts you to a sleek hovercar and opens the door with a rehearsed, deferential sweep. The seal hisses shut with a pressurized whisper; the planet's metallic tang snaps away, replaced by the warm, oiled scent of leather and a faint citrus bite of cleaning products.`
+			`	He escorts you to a sleek hovercar and opens the door with a rehearsed, deferential sweep. The seal hisses shut with a pressurized whisper, and the planet's metallic tang snaps away. It's replaced by the warm, oiled scent of leather and a faint citrus bite of cleaning products.`
 			# mining pitchblende, processing yellowcake (and pretending the color is like early processing practices)
-			`	Hours pass in a gray blur of blighted plains as blue and purple tumbleweeds cartwheel across the sands. Far off, a uranium mine coughs twin plumes of yellow and black dust that vanish into the growing sandstorm. Outside, the sky darkens and the hovercar shudders under the wind, but the driver remains composed, hands steady on the wheel as the storm rages on.`
+			`	Hours pass in a gray blur of blighted plains as blue and purple tumbleweeds cartwheel across the sands. Far off, a uranium mine coughs twin plumes of yellow and black dust that vanish into the growing sandstorm. Outside, the sky darkens and the hovercar shudders in the wind, though the driver remains composed, hands steady on the wheel as the storm rages on.`
 			`	The storm reaches its fiercest pitch and a faint silhouette reveals itself: a geodesic dome ringed by a multi-story building, planted at the base of a lone hill that rises from the barren wasteland.`
-			`	As you close the distance, you notice that both the dome and encircling ring are made of curved glass, and that the hill's face is marred by an abrupt stone terrace halfway up, pocked by small doors and windows. Two roads peel away from either end of the hill to loop the entire campus. Your hovercar sweeps past the ring-encircled dome to slip onto the right-end road that cuts directly into the hill itself.`
+			`	As you close the distance, you notice that both the dome and encircling ring are made of curved glass, and that the hill's face is marred by an abrupt stone terrace halfway up, pocked by small doors and windows. Two roads peel away from either end of the hill to loop the entire campus. Your hovercar sweeps past the ring-encircled dome to slip onto the right-most road that cuts directly into the hill itself.`
 			`	Inside the hill's threshold waits a serious man in an ill-fitting suit, flanked by two assistants. Your driver opens the door, and the foreman steps forward: "<honorific> - welcome to the CRUCIBLE."`
 			choice
 				`	"Thanks, I'm excited for the tour!"`
 					goto welcomecrucible
-				`	"I changed my mind, driver, take me back to my ship."`
+				`	"I changed my mind. Driver, take me back to my ship."`
 			`	The foreman looks at you in bewilderment, then continues standing uncomfortably. "You've driven for hours to get here, and we have the entire VIP tour ready for you. You came all the way here just to waste everyone's time and not see anything?"`
 			choice
 				`	"Yes."`
@@ -9825,7 +9835,7 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 			`	The drive back to your ship is long, silent, and palpably uncomfortable for your driver.`
 				decline
 			label welcomecrucible
-			`	The foreman exhales, relief softening his weathered face as he clasps your hand in a callused shake. He steers you toward a squat hovercart, of course Megaparsec branded. The foreman slides into the driver's seat with an easy authority, and the hovercart glides through the underground passages while he explains the CRUCIBLE's purpose.`
+			`	The foreman exhales, relief softening his weathered face as he clasps your hand in a callused shake. He steers you toward a squat hovercart, of course Megaparsec branded. He slides into the driver's seat with an easy authority, and the hovercart glides through the underground passages while he explains the CRUCIBLE's purpose.`
 			`	"The CRUCIBLE designs and prototypes new performance vehicles for Megaparsec - from tiny personal repulsors to heavy utility carriers and everything in between," he says, tapping the hovercraft's side. "This one? Born in a room much like the one we're about to see."`
 			`	He sketches the campus in a few broad strokes as the hovercart hums on: the large geodesic dome is the Community Center, where families live and workers breathe off-shift; the multi-story glass band encircling it is the Applied Technology Center, where designers wrangle exotic simulations and coax impossible ideas into schematics; and the hill you've tunneled into is the Prototype Production Facility, where drawings are made real and prototypes run the gauntlet of road tests. He leans from the driver's seat, voice dropping into a conspiratorial rasp, "The CRUCIBLE's here for a reason - these are some of the planet's worst storms. If it runs here, it runs anywhere."`
 			`	The tunnel opens into a cavernous lift bay and the hovercart eases to a stop. You feel the floor rising as the foreman turns to you, suddenly formal again, "We've reached the start of the tour - the Applied Technologies Center."`
@@ -9833,7 +9843,7 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 				`	"Let's go!"`
 					goto buildroomintro
 				`	(Wait a moment.)`
-			`	The foreman continues to look at you expectantly for another few seconds, then looks down to fiddle with his tie as the lift bay doors open. As they finish opening, he repeats himself, "Ah yes, the Applied Technologies Center."`
+			`	The foreman continues to stare ahead expectantly for another few seconds as the lift bay doors finish opening. Then, he repeats himself, "Ah yes, the Applied Technologies Center."`
 			label buildroomintro
 			branch "good buildroom intro"
 				has "Syndicate Business expansion 100m good"
@@ -9910,14 +9920,14 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 			``
 			label communityintro1
 			`	He steers you out of the 'Virtual Build Room' and down a narrowing corridor on the inner side of the ring's larger hallway. The hum of work softens as you emerge inside the base of the geodesic Community Center dome you glimpsed on arrival.`
-			`	The interior is enormous, the dome's triangular panes shimmer with the hypnotic patterns of the near-eternal sandstorm outside. Without the globe of artificial daylight set in the dome's crown, the place would be a murky sepia - instead the globe shines a semblance of normalcy below. "The Community Center sits under a high-clarity dome to protect us from radioactive storms and give us some kind of daylight, or a pale imitation, anyway," the foreman shrugs.`
+			`	The interior is enormous, the dome's triangular panes shimmer with the hypnotic patterns of the near-eternal sandstorm outside. Without the globe of artificial daylight set in the dome's crown, the place would be a murky sepia - instead the globe shines a semblance of normalcy below. "The Community Center sits under a high-clarity dome to protect us from radioactive storms and give us daylight, or an imitation of it, anyway," the foreman shrugs.`
 			branch "good community intro2"
 				has "Syndicate Business expansion 100m good"
 			branch "evil community intro2"
 				has "Syndicate Business expansion 100m evil"
 			# neutral
 			`	The dome's floor is a tiled patio, arranged into four areas: a plain sloped building labeled 'Employee Housing' hugs one wall; opposite it, a combined cafeteria and general store with picnic tables; a circular building at the dome's center bears the sign 'Recreation Complex'; and the rear quarter of the dome is obscured by an unmarked floor-to-ceiling warehouse. You see a few families having lunch at the picnic tables.`
-			`	"Please take in our community, generously supported by corporate," the foreman says. "All employees are entitled to a furnished one-bedroom apartment, daily subsidized meals at our employer-operated eating facility, and single membership to the Recreation Complex so they can unwind after a hard day's work. Upgrades are available for a fee - extra bedrooms, expanded meal plans, family rec passes." In a flat voice, he says, "Proudly home to a multipurpose gym, a lap pool, an indoor cricket court, and even a repulsorball arena. Ready to break for lunch?"`
+			`	"Please take in our community, generously supported by corporate," the foreman says flatly. "All employees are entitled to a furnished one-bedroom apartment, daily subsidized meals at our employer-operated eating facility, and single membership to the Recreation Complex so they can unwind after a hard day's work. Upgrades are available for a fee - extra bedrooms, expanded meal plans, family rec passes." In a detached voice, he says, "Proudly home to a multipurpose gym, a lap pool, an indoor cricket court, and even a repulsorball arena. Ready to break for lunch?"`
 				goto communityintro3
 			label "good community intro2"
 			`	The dome's floor is a soft green grass, laid out in four main areas: a row of small townhomes with front gardens and small personal touches lines one wall; opposite them is a combined cafeteria and general store with communal picnic tables beneath shady fruit trees; a green-roofed circular building at the dome's center bears the sign 'Recreation Complex'; and a modest unmarked storage shed is tucked near the rear of the dome. Kids chase each other across the lawn, and the scent of baking drifts from one of the townhomes.`
@@ -9999,7 +10009,7 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 				`	(Shrug non-committedly.)`
 				`	"Fire that man!"`
 					goto fired
-				`	"Of course I'll pay."`
+				`	"Of course I'll pay."  (20,000,000 credits)`
 					goto benefits
 					to display
 						credits > 20000000
@@ -10019,7 +10029,8 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 			`	The foreman watches open-mouthed. As you send the credits over, a slow, shocked grin finally spreads across his face. The employee hugs him, then turns to pump your hand in excited thanks. The foreman slowly shakes his head in disbelief as the employee practically skips away.`
 				goto onwiththetour
 			label fired
-			`	The foreman's jaw tightens, then the employee drops to his knees between you, hands clasped, voice breaking. "Please," he chokes, "this is all I have. My family, they need... we can't... please, don't take my job."`
+			`	Everything seems to freeze for a moment...`
+			`	Then the employee drops to his knees between you, hands clasped, voice breaking. "Please," he chokes, "this is all I have. My family, they need... we can't... please, don't take my job." The foreman's jaw tightens, but he otherwise remains impassive, looking ahead blankly.`
 			choice
 				`	"Well alright, you can stay."`
 					goto unfired
@@ -10069,9 +10080,9 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 			`	You enter a crudely carved hangar where a dozen prototype hovercraft float atop scuffed pads - some little more than exposed chassis with frayed wiring, others wrapped in cheap, production-ready shells that look built to sell fast. Technicians move with frantic urgency, swiftly wielding weld-guns and slapping on sensors.`
 			`	Overhead lights cast stark shadows, and the signature metallic tang of Crossroads' radioactive air is almost overwhelming. The foreman jostles you to a near-finished model. "This is where we check them after assembly, we slap on sensors, tune systems, and drive them into the worst sandstorms to see what breaks - whatever comes back pays for the ones that don't."`
 			`	The hangar doors lift and a prototype sputters out, a gale of radioactive dust pours in. Most of the crew doesn't respond, but the foreman coughs a fit into his sleeve. Then, he says "All the design theories get squeezed for performance on the loop - every terrain and condition and failure to get that last bit of profit. Not designed for the best, but the best value.`
+			label productionintro3
 			action
 				set "syndicate business: crucible full tour"
-			label productionintro3
 			`	"And that just about concludes our tour. Shall I take you back to your driver?"`
 			choice
 				`	"Yes, please."`
@@ -10095,9 +10106,9 @@ mission "Syndicate Business 10.1 B 100m CRUCIBLE Tour"
 				"No, I'm sure I can do it myself."
 					goto lost
 			label aimlesslywandered
-			`	Miraculously, after a mere two hours, you successfully complete what should have been ten minute walk back to the hovercar.`
+			`	Miraculously, after a mere two hours, you successfully complete what should have been a ten minute walk back to the hovercar.`
 			label ending
-			`	Your driver is waiting patiently in the hovercar in the hangar where you first entered. The foreman quickly pockets a handwritten note before giving his closing remarks.`
+			`	Your driver is waiting patiently in the hovercar in the hangar where you first entered. The foreman quickly pockets a handwritten note before reciting his closing remarks in a rehearsed voice.`
 			`	"Thank you for taking the time to visit us today. <closing focus>. It's been a pleasure showing you our operations firsthand, <honorific>, and I hope what you've seen today inspires positive conversations with our leadership. We hold nothing but respect for you and the bosses, and we would all appreciate it if you could put in a good word for all the hard work that happens here to make the CRUCIBLE a success."`
 			choice
 				`	"Eh... we'll see."`
@@ -10128,8 +10139,8 @@ mission "Syndicate Business 10.2 B Tour Feedback"
 		"<foreman>" "the foreman"
 		"<foreman>" "Bob the foreman"
 			has "syndicate business: bob the foreman"
-		"<tour>" "the tour"
-		"<tour>" "the full-length tour"
+		"<tour>" "you didn't go on the tour"
+		"<tour>" "you only saw part of it, and didn't do the full-length tour"
 			has "syndicate business: crucible half tour"
 		"<greeting>" "Hey <first>"
 		"<greeting>" "Captain <last>"
@@ -10155,16 +10166,16 @@ mission "Syndicate Business 10.2 B Tour Feedback"
 			`	"<greeting>,`
 			branch meanopening
 				"syndicate business: mean to Howard" > 0
-			`		"I hope your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE while you were planetside to give you a chance to see what you've funded. It's a remarkable place once you're past the storms, isn't it?`
+			`		"I hope your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE to give you a chance to see what you've funded. It's a remarkable place once you're past the storms, isn't it?`
 				goto historycomment
 			label meanopening
-			`		"I trust your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE while you were planetside to give you a chance to see what we've funded.`
+			`		"I trust your visit to Crossroads went smoothly. I sent a driver to take you out to the CRUCIBLE to give you a chance to see what we've funded.`
 			label historycomment
 			`	When you have a moment, let me know what you thought of the facility, and the people running it. I'm curious to hear your impressions.`
 			`			Howard Vendeur`
 			`			Director of Investor Relations & External Projects, Megaparsec Incorporated`
 			choice
-				`	(Admit that you didn't go on <tour>.)`
+				`	(Admit that <tour>.)`
 					goto admission
 					to display
 						not "syndicate business: crucible full tour"
@@ -10185,12 +10196,14 @@ mission "Syndicate Business 10.2 B Tour Feedback"
 			label great
 			action
 				"syndicate business: mean to Howard"--
+				set "syndicate business: nice to foreman"
 			`	<greeting>,`
-			`		That's great to hear, thank you. I'll make sure the foreman and everyone at the CRUCIBLE know that your were impressed - they'll be proud. Much appreciated.`
+			`		That's great to hear, thank you. I'll make sure that the foreman and everyone at the CRUCIBLE know that you were impressed - they'll be proud. Much appreciated.`
 				goto signoff
 			label awful
 			action
 				"syndicate business: mean to Howard"++
+				set "syndicate business: mean to foreman"
 			`	<greeting>,`
 			`		I'm sorry to hear that. That's not the experience we aim for. I'll contact the foreman to investigate and correct whatever went wrong.`
 			label signoff
